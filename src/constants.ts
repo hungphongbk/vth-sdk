@@ -1,3 +1,4 @@
 export enum SettingKeys {
-    Banner = 'common:banner'
+  Banner = "common:banner",
+  SiteName = "common:siteName",
 }

@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm version prepatch -m "update prepatch version to %s"
+npm version prerelease -m "update prerelease version to %s"
 npm publish
