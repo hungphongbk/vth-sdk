@@ -20,15 +20,15 @@ const UploadInput = styled("input")`
   display: none;
 `;
 
-interface UploadEvent<T = Element> extends SyntheticEvent<T> {
+export interface UploadEvent<T = Element> extends SyntheticEvent<T> {
   target: EventTarget &
     Omit<T, "value"> & {
       value: File;
     };
 }
-type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
+export type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
 
-interface MediaBase {
+export interface MediaBase {
   mimetype: string;
   path: string;
   type: string;
