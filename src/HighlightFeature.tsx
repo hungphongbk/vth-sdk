@@ -5,7 +5,14 @@ import {
   sxFullSize,
   sxFullSizeAbsolute,
 } from "./utils/predefinedSx";
-import { Box, Button, DialogContent, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  DialogContent,
+  DialogProps,
+  Stack,
+  Typography,
+} from "@mui/material";
 import PlusIcon from "./assets/PlusIcon";
 import { useForm } from "react-hook-form";
 import FormInput from "./FormInput";
@@ -31,11 +38,13 @@ export type HighlightFeatureProps = {
   name: string;
   value: ShowcaseHighlightFeatureBase;
   onChange: ChangeEventHandler;
+  DialogProps?: Partial<DialogProps>;
 };
 export default function HighlightFeature({
   name,
   value,
   onChange,
+  DialogProps: _DialogProps = {},
 }: HighlightFeatureProps): JSX.Element {
   const {
     components: { Dialog, TextField, MultilineTextField },
@@ -128,7 +137,7 @@ export default function HighlightFeature({
           </Box>
         </AspectRatio>
       )}
-      <Dialog open={open} onClose={() => setOpen(false)}>
+      <Dialog open={open} onClose={() => setOpen(false)} {..._DialogProps}>
         <DialogContent>
           <Stack direction={"column"} gap={2}>
             <FormInput
