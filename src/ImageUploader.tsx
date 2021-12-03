@@ -11,6 +11,7 @@ import { Box, CircularProgress, IconButton } from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "./utils/predefinedSx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AspectRatio, { AspectRatioProps } from "./AspectRatio";
+import { useVthTheme } from "./VthThemeProvider";
 
 const StyledLabel = styled("label")`
   width: 100%;
@@ -38,7 +39,6 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
   AspectRatioProps,
   "ratio"
 > & {
-  uploadService: (file: File) => Promise<string>;
   name?: string | undefined;
   value?: T;
   onChange?: UploadEventHandler;
@@ -47,7 +47,6 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
 };
 
 export default function ImageUploader<T extends MediaBase = MediaBase>({
-  uploadService,
   name,
   value,
   onChange,
@@ -57,6 +56,10 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
 }: PropsWithChildren<ImageUploaderProps<T>>): JSX.Element {
   const id = uniqueId("file-upload-");
   const [uploading, setUploading] = useState(false);
+
+  const {
+    services: { uploadService },
+  } = useVthTheme();
 
   const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
