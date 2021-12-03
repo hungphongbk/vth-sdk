@@ -5,6 +5,12 @@ export * as Constants from "./constants";
 
 export { default as FormInput } from "./FormInput";
 
+export { default as HighlightFeatures } from "./HighlightFeatures";
+export * from "./HighlightFeatures";
+
+export { default as HighlightFeature } from "./HighlightFeature";
+export * from "./HighlightFeature";
+
 export { default as ListEditor } from "./ListEditor";
 export * from "./ListEditor";
 
