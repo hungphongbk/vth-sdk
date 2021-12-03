@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Control, useFieldArray } from "react-hook-form";
 import { Stack } from "@mui/material";
 import { uniqueId } from "lodash";
-import FormInput from "../../FormInput";
+import FormInput from "./FormInput";
 import HighlightFeature from "./HighlightFeature";
 
 type HighlightFeaturesProps = {
