@@ -3,6 +3,7 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import pkg from "./package.json";
 import typescript from "rollup-plugin-typescript2";
 import commonjs from "@rollup/plugin-commonjs";
+import copy from "rollup-plugin-copy";
 
 // Excluded dependencies
 const EXTERNAL = Object.keys(pkg.devDependencies);
@@ -18,6 +19,24 @@ export default {
     preserveModules: true,
     preserveModulesRoot: "src",
   },
-  plugins: [peerDepsExternal(), resolve(), typescript(), commonjs()],
+  plugins: [
+    peerDepsExternal(),
+    resolve(),
+    typescript(),
+    commonjs(),
+    copy({
+      targets: [
+        {
+          src: "package.json",
+          dest: "dist",
+          transform: (contents, filename) => {
+            const json = JSON.parse(contents.toString());
+            delete json.husky;
+            return JSON.stringify(json, null, 2);
+          },
+        },
+      ],
+    }),
+  ],
   external: EXTERNAL,
 };
