@@ -2,5 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm version prerelease -m "update prerelease version to %s"
-cp ../package.json ../dist/package.json
+cp ./package.json ./dist/package.json
 npm publish dist
