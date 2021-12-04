@@ -48,7 +48,6 @@ export default function HighlightFeature({
 }: HighlightFeatureProps): JSX.Element {
   const {
     components: { Dialog, TextField, MultilineTextField },
-    services: { uploadService },
   } = useVthTheme();
   const [open, setOpen] = useState(false),
     // TODO type highlight dto here
@@ -161,7 +160,6 @@ export default function HighlightFeature({
               control={control}
               component={ImageUploader}
               ratio={"130/63"}
-              uploadService={uploadService}
             >
               <Stack direction={"column"} alignItems={"center"}>
                 <PlusIcon
