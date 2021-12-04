@@ -32,6 +32,7 @@ export default {
           transform: (contents, filename) => {
             const json = JSON.parse(contents.toString());
             delete json.husky;
+            delete json.scripts;
             return JSON.stringify(json, null, 2);
           },
         },
