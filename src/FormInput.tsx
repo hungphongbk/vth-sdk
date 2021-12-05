@@ -144,7 +144,7 @@ function FormInput<
         <Component
           {...rest}
           // defaultValue={defaultValue}
-          {...processPassesFields(field, fieldState)}
+          {...processInputNumber(field, fieldState)}
           error={!!fieldState.error}
           helperText={fieldState.error?.message}
         />
