@@ -54,7 +54,7 @@ type GenericFormInputProps<
   TFieldValues extends FieldValues = FieldValues
 > = FormInputProps<C, { component?: C }, TFieldValues>;
 
-const transformNumberChange = (e) => {
+const transformNumberChange = (e: any) => {
   const output = parseInt(e.target.value, 10);
   return isNaN(output) ? 0 : output;
 };
