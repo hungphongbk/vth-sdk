@@ -2,4 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npm version prerelease -m "update prerelease version to %s"
+npm run build
 npm publish dist

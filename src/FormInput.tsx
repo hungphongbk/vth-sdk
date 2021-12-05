@@ -67,7 +67,7 @@ function FormInput<
 }: GenericFormInputProps<C, TFieldValues>): JSX.Element {
   const Component = component ?? TextField;
   const processInputNumber: FieldProcessCb = (fields, _) => {
-    if (fields.type !== "number") return fields;
+    if (rest.type !== "number") return fields;
     const { name, value, onChange, ...others } = fields;
     return {
       ...others,
