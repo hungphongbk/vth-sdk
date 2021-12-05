@@ -14,5 +14,7 @@ export * from "./ListEditor";
 export { default as ImageUploader } from "./ImageUploader";
 export * from "./ImageUploader";
 
+export * from "./SimpleTableRoot";
+
 export { default as VthThemeProvider } from "./VthThemeProvider";
 export * from "./VthThemeProvider";
