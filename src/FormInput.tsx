@@ -54,21 +54,9 @@ type GenericFormInputProps<
   TFieldValues extends FieldValues = FieldValues
 > = FormInputProps<C, { component?: C }, TFieldValues>;
 
-const numericOnChange = (onChange: any) => (e: any) => {
-  console.log(e);
-  const nativeEvent = e.nativeEvent || e;
-  const clonedEvent = new nativeEvent.constructor(
-    nativeEvent.type,
-    nativeEvent
-  );
-  Object.defineProperty(clonedEvent, "target", {
-    writable: true,
-    value: {
-      value: e.target.value * 1,
-      name: e.target.name,
-    },
-  });
-  onChange(clonedEvent);
+const transformNumberChange = (e) => {
+  const output = parseInt(e.target.value, 10);
+  return isNaN(output) ? 0 : output;
 };
 
 function FormInput<
@@ -90,7 +78,7 @@ function FormInput<
       ...others,
       name,
       value: value * 1,
-      onChange: numericOnChange(onChange),
+      onChange: (e) => onChange(transformNumberChange(e)),
     };
   };
   const processCheckbox: FieldProcessCb = (fields, _) => {
