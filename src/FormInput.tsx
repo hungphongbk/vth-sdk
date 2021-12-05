@@ -66,6 +66,30 @@ function FormInput<
   ...rest
 }: GenericFormInputProps<C, TFieldValues>): JSX.Element {
   const Component = component ?? TextField;
+  const processInputNumber: FieldProcessCb = (fields, _) => {
+    if (fields.type !== "number") return fields;
+    const { name, value, onChange, ...others } = fields;
+    return {
+      ...others,
+      name,
+      value: value * 1,
+      onChange: (e: any) => {
+        const nativeEvent = e.nativeEvent || e;
+        const clonedEvent = new nativeEvent.constructor(
+          nativeEvent.type,
+          nativeEvent
+        );
+        Object.defineProperty(clonedEvent, "target", {
+          writable: true,
+          value: {
+            value: e.target.value * 1,
+            name,
+          },
+        });
+        onChange(clonedEvent);
+      },
+    };
+  };
   const processCheckbox: FieldProcessCb = (fields, _) => {
     if (Component !== Checkbox) return fields;
     const { value, onChange, ...others } = fields;
@@ -105,6 +129,7 @@ function FormInput<
     };
   };
   const processPassesFields = [
+    processInputNumber,
     processCheckbox,
     processAutocomplete,
   ].reduce<FieldProcessCb>(
