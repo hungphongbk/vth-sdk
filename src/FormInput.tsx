@@ -78,7 +78,7 @@ function FormInput<
       ...others,
       name,
       value: value * 1,
-      onChange: (e) => onChange(transformNumberChange(e)),
+      onChange: (e: any) => onChange(transformNumberChange(e)),
     };
   };
   const processCheckbox: FieldProcessCb = (fields, _) => {
