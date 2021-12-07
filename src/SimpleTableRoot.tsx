@@ -1,8 +1,8 @@
-import { Box, styled } from "@mui/material";
+import { Box, css, styled } from "@mui/material";
 
 const GUTTER = 8;
 
-export const SimpleTableRoot = styled(Box)`
+export const SimpleTableRoot = styled(Box)<{ rounded?: true }>`
   --color: #000;
   --border-color: #ddd;
   --summary-border-color: #aaa;
@@ -34,6 +34,18 @@ export const SimpleTableRoot = styled(Box)`
   td.uneditable {
     background-color: #fafafa;
   }
+
+  ${(props) =>
+    props.rounded &&
+    css`
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid #ddd;
+      > table {
+        margin: -1px;
+        width: calc(100% + 2px);
+      }
+    `}
 `;
 SimpleTableRoot.TextEditor = styled("input")`
   appearance: none;
