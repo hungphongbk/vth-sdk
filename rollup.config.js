@@ -26,6 +26,7 @@ export default {
     commonjs(),
     copy({
       targets: [
+        { src: ".npmrc", dest: "dist" },
         {
           src: "package.json",
           dest: "dist",
