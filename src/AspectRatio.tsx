@@ -4,6 +4,9 @@ import { Box, styled } from "@mui/material";
 export type AspectRatioProps = { ratio?: string | number };
 const AspectRatio = styled(Box)<AspectRatioProps>`
   position: relative;
+  @supports (aspect-ratio: 1/1) {
+    aspect-ratio: calc(${(props) => props.ratio});
+  }
   > :first-child {
     position: absolute;
     top: 0;
