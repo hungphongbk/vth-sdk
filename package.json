@@ -83,7 +83,7 @@
     "prepare": "husky install"
   },
   "types": "./index.d.ts",
-  "version": "1.0.6-39",
+  "version": "1.0.6-40",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   }
