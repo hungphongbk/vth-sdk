@@ -81,7 +81,7 @@
     "test": "jest",
     "prepare": "husky install"
   },
-  "version": "1.0.6-37",
+  "version": "1.0.6-38",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   }
