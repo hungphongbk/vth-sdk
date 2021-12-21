@@ -68,6 +68,7 @@
     ]
   },
   "main": "./index.js",
+  "module": "./index.js",
   "name": "@hungphongbk/vth-sdk",
   "repository": {
     "type": "git",
@@ -81,6 +82,7 @@
     "test": "jest",
     "prepare": "husky install"
   },
+  "types": "./index.d.ts",
   "version": "1.0.6-38",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
