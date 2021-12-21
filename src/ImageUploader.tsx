@@ -77,7 +77,7 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
       const file = event.target.files![0]!,
         mimetype = file.type,
         filename = file.name,
-        path = await uploadService(file);
+        response = await uploadService(file);
 
       Object.defineProperty(clonedEvent, "target", {
         writable: true,
@@ -88,9 +88,10 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
             ...(value?.cid ? { id: value.cid } : {}),
             mimetype,
             filename,
-            preloadUrl: path.preload,
-            width: path.width,
-            height: path.height,
+            path: response.path,
+            preloadUrl: response.preload,
+            width: response.width,
+            height: response.height,
           },
           name,
         },
