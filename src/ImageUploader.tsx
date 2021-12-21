@@ -33,6 +33,9 @@ export interface MediaBase {
   mimetype: string;
   path: string;
   type: string;
+  preloadUrl: string;
+  width: number;
+  height: number;
 }
 
 export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
@@ -85,7 +88,9 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
             ...(value?.cid ? { id: value.cid } : {}),
             mimetype,
             filename,
-            path,
+            preloadUrl: path.preload,
+            width: path.width,
+            height: path.height,
           },
           name,
         },

@@ -6,6 +6,13 @@ import React, {
 } from "react";
 import { DialogProps, TextFieldProps } from "@mui/material";
 
+export type UploadResponse = {
+  id: string;
+  path: string;
+  preload: string;
+  width: number;
+  height: number;
+};
 export type VthThemeContext = {
   components: {
     Dialog: ComponentType<DialogProps>;
@@ -13,7 +20,7 @@ export type VthThemeContext = {
     MultilineTextField: ComponentType<TextFieldProps>;
   };
   services: {
-    uploadService: (file: File) => Promise<string>;
+    uploadService: (file: File) => Promise<UploadResponse>;
   };
 };
 type VthThemeProviderProps = PropsWithChildren<{
