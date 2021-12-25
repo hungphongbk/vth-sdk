@@ -1,0 +1,5 @@
+query Showcase($slug: String!) {
+    showcase(slug: $slug) {
+        ...ShowcaseDetailFragment
+    }
+}

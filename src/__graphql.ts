@@ -458,7 +458,7 @@ export interface MediaDto extends IdInterface {
   mimetype: Scalars['String'];
   path: Scalars['String'];
   preloadUrl: Maybe<Scalars['String']>;
-  type: Scalars['String'];
+  type: MediaType;
   width: Maybe<Scalars['Float']>;
 }
 
@@ -491,7 +491,7 @@ export interface MediaDtoDeleteResponse {
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
   preloadUrl: Maybe<Scalars['String']>;
-  type: Maybe<Scalars['String']>;
+  type: Maybe<MediaType>;
   width: Maybe<Scalars['Float']>;
 }
 
@@ -541,8 +541,14 @@ export interface MediaInput {
   mimetype: Scalars['String'];
   path: Scalars['String'];
   preloadUrl: Maybe<Scalars['String']>;
-  type: Maybe<Scalars['Float']>;
+  type: Maybe<MediaType>;
   width: Maybe<Scalars['Float']>;
+}
+
+export enum MediaType {
+  Hf = 'HF',
+  Imglist = 'IMGLIST',
+  Showcase = 'SHOWCASE'
 }
 
 export interface Mutation {
@@ -1577,7 +1583,7 @@ export interface UpdateMediaDto {
   mimetype: Maybe<Scalars['String']>;
   path: Maybe<Scalars['String']>;
   preloadUrl: Maybe<Scalars['String']>;
-  type: Maybe<Scalars['String']>;
+  type: Maybe<MediaType>;
   width: Maybe<Scalars['Float']>;
 }
 
@@ -1629,101 +1635,177 @@ export enum UserStatusEnum {
   PendingInvestor = 'PENDING_INVESTOR'
 }
 
-export type CreateOneMediaDtoMutationVariables = Exact<{
-  type: Scalars['Float'];
-  path: Scalars['String'];
-  preloadUrl: Scalars['String'];
-  filename: Scalars['String'];
-  mimetype: Scalars['String'];
+export type MediaFragmentFragment = { id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined };
+
+export type ShowcaseDetailFragmentFragment = { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | undefined, expectedSaleEndAt: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined } }>, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined }> }> };
+
+export type ShowcaseQueryVariables = Exact<{
+  slug: Scalars['String'];
 }>;
 
 
-export type CreateOneMediaDtoMutation = { createOneMediaDto: { id: string, path: string, preloadUrl: string | undefined, filename: string, mimetype: string } };
+export type ShowcaseQuery = { showcase: { id: string, slug: string, name: string, status: ShowcaseStatus, description: string, expectedSaleAt: any | undefined, expectedSaleEndAt: any | undefined, publishStatus: PublishStatus, updatedAt: any, createdAt: any, author: { email: string, name: string }, brand: { name: string, description: string }, image: { id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined }, expectedSalePrice: { regular: number, pioneer: number, preorder: number, promo: number } | undefined, expectedQuantity: { pioneer: number, promo: number, preorder: number, regular: number } | undefined, investorStat: { totalRevenue: number, firstYearRevenue: number, campaignDuration: number, growthRate: number, adCostRate: number, adCost: string, operatingCostRate: number, operatingCost: string, initialCapital: string, revolvingInterval: number, revolvingPerDay: number, packages: Array<{ fund: string, firstYearBenefit: string, package: { id: string, displayName: string, fundedRate: number, benefitRate: number, count: number } }> } | undefined, highlightFeatures: Array<{ id: string, name: string, description: string, image: { id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined } }>, imageLists: Array<{ id: string, images: Array<{ id: string, path: string, preloadUrl: string | undefined, width: number | undefined, height: number | undefined }> }> } };
 
-export type SetImageOnShowcaseMutationVariables = Exact<{
-  showcaseId: Scalars['String'];
-  relationId: Scalars['ID'];
+export type UpdateOneShowcaseMutationVariables = Exact<{
+  slug: Scalars['String'];
+  input: ShowcaseUpdateInputDto;
 }>;
 
 
-export type SetImageOnShowcaseMutation = { setImageOnShowcase: { id: string, slug: string } };
+export type UpdateOneShowcaseMutation = { updateOneShowcase: boolean };
 
-
-export const CreateOneMediaDtoDocument = gql`
-    mutation CreateOneMediaDto($type: Float!, $path: String!, $preloadUrl: String!, $filename: String!, $mimetype: String!) {
-  createOneMediaDto(
-    input: {mediaDto: {type: $type, path: $path, preloadUrl: $preloadUrl, filename: $filename, mimetype: $mimetype}}
-  ) {
-    id
-    path
-    preloadUrl
-    filename
-    mimetype
-  }
+export const MediaFragmentFragmentDoc = gql`
+    fragment MediaFragment on MediaDto {
+  id
+  path
+  preloadUrl
+  width
+  height
 }
     `;
-export type CreateOneMediaDtoMutationFn = Apollo.MutationFunction<CreateOneMediaDtoMutation, CreateOneMediaDtoMutationVariables>;
+export const ShowcaseDetailFragmentFragmentDoc = gql`
+    fragment ShowcaseDetailFragment on Showcase {
+  id
+  slug
+  name
+  author {
+    email
+    name
+  }
+  brand {
+    name
+    description
+  }
+  status
+  image {
+    ...MediaFragment
+  }
+  description
+  expectedSalePrice {
+    regular
+    pioneer
+    preorder
+    promo
+  }
+  expectedQuantity {
+    pioneer
+    promo
+    preorder
+    regular
+  }
+  expectedSaleAt
+  expectedSaleEndAt
+  investorStat {
+    totalRevenue
+    firstYearRevenue
+    campaignDuration
+    growthRate
+    adCostRate
+    adCost
+    operatingCostRate
+    operatingCost
+    initialCapital
+    revolvingInterval
+    revolvingPerDay
+    packages {
+      package {
+        id
+        displayName
+        fundedRate
+        benefitRate
+        count
+      }
+      fund
+      firstYearBenefit
+    }
+  }
+  highlightFeatures {
+    id
+    name
+    description
+    image {
+      ...MediaFragment
+    }
+  }
+  imageLists {
+    id
+    images {
+      ...MediaFragment
+    }
+  }
+  publishStatus
+  status
+  updatedAt
+  createdAt
+}
+    ${MediaFragmentFragmentDoc}`;
+export const ShowcaseDocument = gql`
+    query Showcase($slug: String!) {
+  showcase(slug: $slug) {
+    ...ShowcaseDetailFragment
+  }
+}
+    ${ShowcaseDetailFragmentFragmentDoc}`;
 
 /**
- * __useCreateOneMediaDtoMutation__
+ * __useShowcaseQuery__
  *
- * To run a mutation, you first call `useCreateOneMediaDtoMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateOneMediaDtoMutation` returns a tuple that includes:
+ * To run a query within a React component, call `useShowcaseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useShowcaseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useShowcaseQuery({
+ *   variables: {
+ *      slug: // value for 'slug'
+ *   },
+ * });
+ */
+export function useShowcaseQuery(baseOptions: Apollo.QueryHookOptions<ShowcaseQuery, ShowcaseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ShowcaseQuery, ShowcaseQueryVariables>(ShowcaseDocument, options);
+      }
+export function useShowcaseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowcaseQuery, ShowcaseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ShowcaseQuery, ShowcaseQueryVariables>(ShowcaseDocument, options);
+        }
+export type ShowcaseQueryHookResult = ReturnType<typeof useShowcaseQuery>;
+export type ShowcaseLazyQueryHookResult = ReturnType<typeof useShowcaseLazyQuery>;
+export type ShowcaseQueryResult = Apollo.QueryResult<ShowcaseQuery, ShowcaseQueryVariables>;
+export function refetchShowcaseQuery(variables: ShowcaseQueryVariables) {
+      return { query: ShowcaseDocument, variables: variables }
+    }
+export const UpdateOneShowcaseDocument = gql`
+    mutation UpdateOneShowcase($slug: String!, $input: ShowcaseUpdateInputDto!) {
+  updateOneShowcase(slug: $slug, input: $input)
+}
+    `;
+export type UpdateOneShowcaseMutationFn = Apollo.MutationFunction<UpdateOneShowcaseMutation, UpdateOneShowcaseMutationVariables>;
+
+/**
+ * __useUpdateOneShowcaseMutation__
+ *
+ * To run a mutation, you first call `useUpdateOneShowcaseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOneShowcaseMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createOneMediaDtoMutation, { data, loading, error }] = useCreateOneMediaDtoMutation({
+ * const [updateOneShowcaseMutation, { data, loading, error }] = useUpdateOneShowcaseMutation({
  *   variables: {
- *      type: // value for 'type'
- *      path: // value for 'path'
- *      preloadUrl: // value for 'preloadUrl'
- *      filename: // value for 'filename'
- *      mimetype: // value for 'mimetype'
+ *      slug: // value for 'slug'
+ *      input: // value for 'input'
  *   },
  * });
  */
-export function useCreateOneMediaDtoMutation(baseOptions?: Apollo.MutationHookOptions<CreateOneMediaDtoMutation, CreateOneMediaDtoMutationVariables>) {
+export function useUpdateOneShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<UpdateOneShowcaseMutation, UpdateOneShowcaseMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateOneMediaDtoMutation, CreateOneMediaDtoMutationVariables>(CreateOneMediaDtoDocument, options);
+        return Apollo.useMutation<UpdateOneShowcaseMutation, UpdateOneShowcaseMutationVariables>(UpdateOneShowcaseDocument, options);
       }
-export type CreateOneMediaDtoMutationHookResult = ReturnType<typeof useCreateOneMediaDtoMutation>;
-export type CreateOneMediaDtoMutationResult = Apollo.MutationResult<CreateOneMediaDtoMutation>;
-export type CreateOneMediaDtoMutationOptions = Apollo.BaseMutationOptions<CreateOneMediaDtoMutation, CreateOneMediaDtoMutationVariables>;
-export const SetImageOnShowcaseDocument = gql`
-    mutation SetImageOnShowcase($showcaseId: String!, $relationId: ID!) {
-  setImageOnShowcase(input: {id: $showcaseId, relationId: $relationId}) {
-    id
-    slug
-  }
-}
-    `;
-export type SetImageOnShowcaseMutationFn = Apollo.MutationFunction<SetImageOnShowcaseMutation, SetImageOnShowcaseMutationVariables>;
-
-/**
- * __useSetImageOnShowcaseMutation__
- *
- * To run a mutation, you first call `useSetImageOnShowcaseMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSetImageOnShowcaseMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [setImageOnShowcaseMutation, { data, loading, error }] = useSetImageOnShowcaseMutation({
- *   variables: {
- *      showcaseId: // value for 'showcaseId'
- *      relationId: // value for 'relationId'
- *   },
- * });
- */
-export function useSetImageOnShowcaseMutation(baseOptions?: Apollo.MutationHookOptions<SetImageOnShowcaseMutation, SetImageOnShowcaseMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SetImageOnShowcaseMutation, SetImageOnShowcaseMutationVariables>(SetImageOnShowcaseDocument, options);
-      }
-export type SetImageOnShowcaseMutationHookResult = ReturnType<typeof useSetImageOnShowcaseMutation>;
-export type SetImageOnShowcaseMutationResult = Apollo.MutationResult<SetImageOnShowcaseMutation>;
-export type SetImageOnShowcaseMutationOptions = Apollo.BaseMutationOptions<SetImageOnShowcaseMutation, SetImageOnShowcaseMutationVariables>;
+export type UpdateOneShowcaseMutationHookResult = ReturnType<typeof useUpdateOneShowcaseMutation>;
+export type UpdateOneShowcaseMutationResult = Apollo.MutationResult<UpdateOneShowcaseMutation>;
+export type UpdateOneShowcaseMutationOptions = Apollo.BaseMutationOptions<UpdateOneShowcaseMutation, UpdateOneShowcaseMutationVariables>;

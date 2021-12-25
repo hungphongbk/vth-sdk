@@ -1,9 +1,0 @@
-mutation CreateOneMediaDto($type:Float!$path:String!,$preloadUrl:String!,$filename:String!,$mimetype:String!){
-  createOneMediaDto(input: {mediaDto: {type:$type,path: $path,preloadUrl: $preloadUrl,filename: $filename,mimetype: $mimetype}}){
-    id
-    path
-    preloadUrl
-    filename
-    mimetype
-  }
-}

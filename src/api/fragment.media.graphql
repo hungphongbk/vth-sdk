@@ -1,0 +1,7 @@
+fragment MediaFragment on MediaDto{
+  id
+  path
+  preloadUrl
+  width
+  height
+}

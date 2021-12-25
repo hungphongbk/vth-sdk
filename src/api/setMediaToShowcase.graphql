@@ -1,6 +1,0 @@
-mutation SetImageOnShowcase($showcaseId:String!,$relationId:ID!){
-  setImageOnShowcase(input: {id: $showcaseId,relationId: $relationId}){
-    id
-    slug
-  }
-}

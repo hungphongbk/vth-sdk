@@ -1,0 +1,74 @@
+fragment ShowcaseDetailFragment on Showcase{
+  id
+  slug
+  name
+  author{
+    email
+    name
+  }
+  brand{
+    name
+    description
+  }
+  status
+  image {
+    ...MediaFragment
+  }
+  description
+  expectedSalePrice{
+    regular
+    pioneer
+    preorder
+    promo
+  }
+  expectedQuantity {
+    pioneer
+    promo
+    preorder
+    regular
+  }
+  expectedSaleAt
+  expectedSaleEndAt
+  investorStat {
+    totalRevenue
+    firstYearRevenue
+    campaignDuration
+    growthRate
+    adCostRate
+    adCost
+    operatingCostRate
+    operatingCost
+    initialCapital
+    revolvingInterval
+    revolvingPerDay
+    packages {
+      package{
+        id
+        displayName
+        fundedRate
+        benefitRate
+        count
+      }
+      fund
+      firstYearBenefit
+    }
+  }
+  highlightFeatures{
+    id
+    name
+    description
+    image {
+      ...MediaFragment
+    }
+  }
+  imageLists{
+    id
+    images{
+      ...MediaFragment
+    }
+  }
+  publishStatus
+  status
+  updatedAt
+  createdAt
+}
