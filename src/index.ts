@@ -20,3 +20,5 @@ export * from "./SimpleTableRoot";
 
 export { default as VthThemeProvider } from "./VthThemeProvider";
 export * from "./VthThemeProvider";
+
+export * from "./__graphql";
