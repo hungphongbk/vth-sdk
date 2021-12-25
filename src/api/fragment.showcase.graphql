@@ -29,30 +29,6 @@ fragment ShowcaseDetailFragment on Showcase{
   }
   expectedSaleAt
   expectedSaleEndAt
-  investorStat {
-    totalRevenue
-    firstYearRevenue
-    campaignDuration
-    growthRate
-    adCostRate
-    adCost
-    operatingCostRate
-    operatingCost
-    initialCapital
-    revolvingInterval
-    revolvingPerDay
-    packages {
-      package{
-        id
-        displayName
-        fundedRate
-        benefitRate
-        count
-      }
-      fund
-      firstYearBenefit
-    }
-  }
   highlightFeatures{
     id
     name
