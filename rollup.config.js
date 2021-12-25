@@ -37,6 +37,10 @@ export default {
             return JSON.stringify(json, null, 2);
           },
         },
+        {
+          src: "src/api",
+          dest: "dist",
+        },
       ],
     }),
   ],
