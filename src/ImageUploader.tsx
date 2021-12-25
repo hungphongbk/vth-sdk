@@ -64,7 +64,10 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
     services: { uploadService },
   } = useVthTheme();
 
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+  const emitChange = async (
+    event: ChangeEvent<HTMLInputElement>,
+    value: any
+  ) => {
     if (onChange) {
       const nativeEvent = event.nativeEvent || event;
       // @ts-ignore
@@ -73,32 +76,40 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
         nativeEvent
       );
 
-      setUploading(true);
-      const file = event.target.files![0]!,
-        mimetype = file.type,
-        filename = file.name,
-        response = await uploadService(file);
-
       Object.defineProperty(clonedEvent, "target", {
         writable: true,
         value: {
-          value: {
-            ...(value ?? {}),
-            // @ts-ignore
-            ...(value?.cid ? { id: value.cid } : {}),
-            mimetype,
-            filename,
-            path: response.path,
-            preloadUrl: response.preload,
-            width: response.width,
-            height: response.height,
-          },
+          value,
           name,
         },
       });
       onChange(clonedEvent);
-      setUploading(false);
     }
+  };
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    setUploading(true);
+    const file = event.target.files![0]!,
+      mimetype = file.type,
+      filename = file.name,
+      response = await uploadService(file);
+
+    await emitChange(event, {
+      ...(value ?? {}),
+      // @ts-ignore
+      ...(value?.cid ? { id: value.cid } : {}),
+      mimetype,
+      filename,
+      path: response.path,
+      preloadUrl: response.preload,
+      width: response.width,
+      height: response.height,
+    });
+    setUploading(false);
+  };
+
+  const handleRemove = async (event: any) => {
+    if (onDelete) await onDelete();
+    await emitChange(event, undefined);
   };
 
   return (
@@ -137,7 +148,7 @@ export default function ImageUploader<T extends MediaBase = MediaBase>({
                 bgcolor: "primary.dark",
               },
             }}
-            onClick={() => onDelete?.()}
+            onClick={handleRemove}
           >
             <DeleteIcon />
           </IconButton>
