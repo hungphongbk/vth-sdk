@@ -146,6 +146,7 @@ export default function HighlightFeature({
                 variant={"standard"}
                 placeholder={"Tính năng"}
                 component={TextField}
+                fullWidth
               />
             </Grid>
 
@@ -156,6 +157,7 @@ export default function HighlightFeature({
                 variant={"standard"}
                 placeholder={"Mô tả tính năng"}
                 component={MultilineTextField}
+                fullWidth
               />
             </Grid>
 
@@ -183,13 +185,16 @@ export default function HighlightFeature({
                 variant={"contained"}
                 color={"primary"}
                 onClick={handleSubmit(handleChange)}
+                fullWidth
               >
                 Lưu
               </Button>
             </Grid>
             {isUpdate && (
               <Grid item xs={12} sm={6}>
-                <Button variant={"text"}>Xoá</Button>
+                <Button variant={"text"} fullWidth color={"error"}>
+                  Xoá
+                </Button>
               </Grid>
             )}
           </Grid>
