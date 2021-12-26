@@ -12,7 +12,7 @@ export type ListEditorProps = {
   itemGenerator?: (index: number) => any;
   ListComponent?: ComponentType<any>;
   ListComponentProps?: any;
-  options?: { deletable?: boolean };
+  options?: { deletable?: boolean; onAppend?: (value: any) => boolean };
 };
 export default function ListEditor({
   name,
@@ -28,7 +28,8 @@ export default function ListEditor({
   const options: ListEditorOptions = { deletable: false, ..._options };
 
   const finishEditTemp = (e: any) => {
-    append(e.target.value);
+    const rs = _options.onAppend?.(e.target.value) ?? true;
+    if (rs) append(e.target.value);
   };
 
   return (
