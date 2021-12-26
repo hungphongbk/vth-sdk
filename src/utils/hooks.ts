@@ -1,9 +1,10 @@
 import { useCallback, useState } from "react";
 
-export const useOpenCloseState = () => {
+type Cb = () => void;
+export const useOpenCloseState = (): [boolean, Cb, Cb] => {
   const [open, setOpen] = useState(false);
-  const doOpen: () => void = useCallback(() => setOpen(true), []),
-    doClose: () => void = useCallback(() => setOpen(false), []);
+  const doOpen = useCallback(() => setOpen(true), []),
+    doClose = useCallback(() => setOpen(false), []);
 
   return [open, doOpen, doClose];
 };
