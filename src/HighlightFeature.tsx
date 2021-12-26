@@ -15,6 +15,7 @@ import { useForm } from "react-hook-form";
 import FormInput from "./FormInput";
 import ImageUploader, { MediaBase } from "./ImageUploader";
 import { useVthTheme } from "./VthThemeProvider";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 export interface ShowcaseHighlightFeatureBase {
   description: string;
@@ -52,7 +53,7 @@ export default function HighlightFeature({
     form = useForm({
       defaultValues: value ?? {},
     }),
-    { control, handleSubmit } = form,
+    { control, handleSubmit, formState } = form,
     isUpdate = typeof value !== "undefined";
 
   const handleChange = async (values: any, event: any) => {
@@ -181,14 +182,15 @@ export default function HighlightFeature({
               </FormInput>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button
+              <LoadingButton
                 variant={"contained"}
                 color={"primary"}
                 onClick={handleSubmit(handleChange)}
                 fullWidth
+                loading={formState.isSubmitting}
               >
                 Lưu
-              </Button>
+              </LoadingButton>
             </Grid>
             {isUpdate && (
               <Grid item xs={12} sm={6}>
