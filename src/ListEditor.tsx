@@ -4,7 +4,11 @@ import React, { ComponentType } from "react";
 import FormInput from "./FormInput";
 import { uniqueId } from "lodash";
 
-export type ListEditorOptions = { deletable?: boolean };
+export type ListEditorOptions = {
+  deletable?: boolean;
+  onAppend?: (value: any) => boolean | Promise<boolean>;
+  onUpdate?: (value: any) => boolean | Promise<boolean>;
+};
 export type ListEditorProps = {
   name: string;
   control: Control<any>;
@@ -12,10 +16,7 @@ export type ListEditorProps = {
   itemGenerator?: (index: number) => any;
   ListComponent?: ComponentType<any>;
   ListComponentProps?: any;
-  options?: {
-    deletable?: boolean;
-    onAppend?: (value: any) => boolean | Promise<boolean>;
-  };
+  options?: ListEditorOptions;
 };
 export default function ListEditor({
   name,
@@ -31,7 +32,7 @@ export default function ListEditor({
   const options: ListEditorOptions = { deletable: false, ..._options };
 
   const finishEditTemp = async (e: any) => {
-    const rs = (await _options.onAppend?.(e.target.value)) ?? true;
+    const rs = (await options.onAppend?.(e.target.value)) ?? true;
     if (rs) append(e.target.value);
   };
 
@@ -44,6 +45,7 @@ export default function ListEditor({
           control={control}
           component={ItemComponent}
           onDelete={() => options.deletable && remove(index)}
+          onUpdate={options.onUpdate}
         />
       ))}
       <ItemComponent
