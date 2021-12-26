@@ -22,3 +22,4 @@ export { default as VthThemeProvider } from "./VthThemeProvider";
 export * from "./VthThemeProvider";
 
 export * from "./__graphql";
+export * from "./utils";
