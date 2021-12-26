@@ -1,15 +1,12 @@
 import React, { EventHandler, SyntheticEvent, useState } from "react";
 import AspectRatio from "./AspectRatio";
-import {
-  sxFlexCenter,
-  sxFullSize,
-  sxFullSizeAbsolute,
-} from "./utils/predefinedSx";
+import { sxFlexCenter, sxFullSize, sxFullSizeAbsolute } from "./utils";
 import {
   Box,
   Button,
   DialogContent,
   DialogProps,
+  Grid,
   Stack,
   Typography,
 } from "@mui/material";
@@ -52,11 +49,11 @@ export default function HighlightFeature({
     components: { Dialog, TextField, MultilineTextField },
   } = useVthTheme();
   const [open, setOpen] = useState(false),
-    // TODO type highlight dto here
     form = useForm({
       defaultValues: value ?? {},
     }),
-    { control, handleSubmit, reset } = form;
+    { control, handleSubmit } = form,
+    isUpdate = typeof value !== "undefined";
 
   const handleChange = async (values: any, event: any) => {
     if (onChange) {
@@ -74,7 +71,6 @@ export default function HighlightFeature({
           name,
         },
       });
-      const isUpdate = typeof value !== "undefined";
       onChange(clonedEvent);
       if (isUpdate) await onUpdate?.(values);
       setOpen(false);
@@ -142,48 +138,61 @@ export default function HighlightFeature({
       )}
       <Dialog open={open} onClose={() => setOpen(false)} {..._DialogProps}>
         <DialogContent>
-          <Stack direction={"column"} gap={2}>
-            <FormInput
-              name={"name"}
-              control={control}
-              variant={"standard"}
-              placeholder={"Tính năng"}
-              component={TextField}
-            />
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <FormInput
+                name={"name"}
+                control={control}
+                variant={"standard"}
+                placeholder={"Tính năng"}
+                component={TextField}
+              />
+            </Grid>
 
-            <FormInput
-              name={"description"}
-              control={control}
-              variant={"standard"}
-              placeholder={"Mô tả tính năng"}
-              component={MultilineTextField}
-            />
+            <Grid item xs={12}>
+              <FormInput
+                name={"description"}
+                control={control}
+                variant={"standard"}
+                placeholder={"Mô tả tính năng"}
+                component={MultilineTextField}
+              />
+            </Grid>
 
-            <FormInput
-              name={"image"}
-              control={control}
-              component={ImageUploader}
-              ratio={"130/63"}
-            >
-              <Stack direction={"column"} alignItems={"center"}>
-                <PlusIcon
-                  sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}
-                />
-                <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
-                  Hình ảnh minh hoạ
-                </Typography>
-                <Typography>JPEG, JPG - 1300x630px</Typography>
-                <Typography>Tối đa 1MB</Typography>
-              </Stack>
-            </FormInput>
-            <Button
-              variant={"contained"}
-              color={"primary"}
-              onClick={handleSubmit(handleChange)}
-            >
-              Lưu
-            </Button>
-          </Stack>
+            <Grid item xs={12}>
+              <FormInput
+                name={"image"}
+                control={control}
+                component={ImageUploader}
+                ratio={"130/63"}
+              >
+                <Stack direction={"column"} alignItems={"center"}>
+                  <PlusIcon
+                    sx={{ color: "black", height: 26, width: 26, mb: 0.5 }}
+                  />
+                  <Typography sx={{ fontSize: 15, fontWeight: 600 }}>
+                    Hình ảnh minh hoạ
+                  </Typography>
+                  <Typography>JPEG, JPG - 1300x630px</Typography>
+                  <Typography>Tối đa 1MB</Typography>
+                </Stack>
+              </FormInput>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                onClick={handleSubmit(handleChange)}
+              >
+                Lưu
+              </Button>
+            </Grid>
+            {isUpdate && (
+              <Grid item xs={12} sm={6}>
+                <Button variant={"text"}>Xoá</Button>
+              </Grid>
+            )}
+          </Grid>
         </DialogContent>
       </Dialog>
     </>
