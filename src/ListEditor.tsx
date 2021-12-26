@@ -12,7 +12,10 @@ export type ListEditorProps = {
   itemGenerator?: (index: number) => any;
   ListComponent?: ComponentType<any>;
   ListComponentProps?: any;
-  options?: { deletable?: boolean; onAppend?: (value: any) => boolean };
+  options?: {
+    deletable?: boolean;
+    onAppend?: (value: any) => boolean | Promise<boolean>;
+  };
 };
 export default function ListEditor({
   name,
@@ -27,8 +30,8 @@ export default function ListEditor({
   const { fields, append, remove } = useFieldArray({ control, name });
   const options: ListEditorOptions = { deletable: false, ..._options };
 
-  const finishEditTemp = (e: any) => {
-    const rs = _options.onAppend?.(e.target.value) ?? true;
+  const finishEditTemp = async (e: any) => {
+    const rs = (await _options.onAppend?.(e.target.value)) ?? true;
     if (rs) append(e.target.value);
   };
 
