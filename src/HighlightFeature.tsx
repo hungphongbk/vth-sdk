@@ -38,12 +38,14 @@ export type HighlightFeatureProps = {
   name: string;
   value: ShowcaseHighlightFeatureBase;
   onChange: ChangeEventHandler;
+  onUpdate?: (value: any) => boolean | Promise<boolean>;
   DialogProps?: Partial<DialogProps>;
 };
 export default function HighlightFeature({
   name,
   value,
   onChange,
+  onUpdate,
   DialogProps: _DialogProps = {},
 }: HighlightFeatureProps): JSX.Element {
   const {
@@ -72,7 +74,9 @@ export default function HighlightFeature({
           name,
         },
       });
+      const isUpdate = typeof value !== "undefined";
       onChange(clonedEvent);
+      if (isUpdate) await onUpdate?.(values);
       setOpen(false);
     }
   };
