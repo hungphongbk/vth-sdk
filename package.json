@@ -97,5 +97,8 @@
   "version": "1.0.6-65",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
+  },
+  "dependencies": {
+    "deep-object-diff": "^1.1.0"
   }
 }

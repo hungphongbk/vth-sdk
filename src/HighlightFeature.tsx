@@ -22,6 +22,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import { ImageUploader, MediaBase } from "./ImageUploader";
 import { get, set } from "lodash";
 
+// import {diff} from "deep-object-diff";
+
 export interface ShowcaseHighlightFeatureBase {
   description: string;
   id: string;
@@ -87,8 +89,8 @@ export function HighlightFeature({
           name,
         },
       });
-      onChange(clonedEvent);
       if (isUpdate) await submitUpdate(values);
+      onChange(clonedEvent);
       setOpen(false);
     }
   };
