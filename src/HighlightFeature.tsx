@@ -20,6 +20,7 @@ import { FormInput } from "./FormInput";
 import { useVthTheme } from "./VthThemeProvider";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { ImageUploader, MediaBase } from "./ImageUploader";
+import { get, set } from "lodash";
 
 export interface ShowcaseHighlightFeatureBase {
   description: string;
@@ -60,6 +61,16 @@ export function HighlightFeature({
     { control, handleSubmit, formState } = form,
     isUpdate = typeof value !== "undefined";
 
+  const submitUpdate = async (formValues: any) => {
+    const payload = Object.keys(formState.dirtyFields).reduce((obj, key) => {
+      const newObj = { ...obj };
+      set(newObj, key, get(formValues, key));
+      return newObj;
+    }, formValues);
+
+    console.log(payload);
+    await onUpdate!(payload);
+  };
   const handleChange = async (values: any, event: any) => {
     if (onChange) {
       const nativeEvent = event.nativeEvent || event;
@@ -77,7 +88,7 @@ export function HighlightFeature({
         },
       });
       onChange(clonedEvent);
-      if (isUpdate) await onUpdate?.(values);
+      if (isUpdate) await submitUpdate(values);
       setOpen(false);
     }
   };
