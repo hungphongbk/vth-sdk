@@ -8,7 +8,7 @@ import React, {
 import { styled } from "@mui/material/styles";
 import { uniqueId } from "lodash";
 import { Box, CircularProgress, IconButton } from "@mui/material";
-import { sxFlexCenter, sxFullSize } from "./utils";
+import { sxFlexCenter, sxFullSize } from "./utils/predefinedSx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AspectRatio, AspectRatioProps } from "./AspectRatio";
 import { useVthTheme } from "./VthThemeProvider";
