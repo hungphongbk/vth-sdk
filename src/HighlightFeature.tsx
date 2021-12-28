@@ -1,6 +1,10 @@
 import React, { EventHandler, SyntheticEvent, useState } from "react";
 import { AspectRatio } from "./AspectRatio";
-import { sxFlexCenter, sxFullSize, sxFullSizeAbsolute } from "./utils";
+import {
+  sxFlexCenter,
+  sxFullSize,
+  sxFullSizeAbsolute,
+} from "./utils/predefinedSx";
 import {
   Box,
   Button,
