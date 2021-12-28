@@ -20,9 +20,7 @@ import { FormInput } from "./FormInput";
 import { useVthTheme } from "./VthThemeProvider";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { ImageUploader, MediaBase } from "./ImageUploader";
-import { get, set } from "lodash";
-
-// import {diff} from "deep-object-diff";
+import { diff } from "deep-object-diff";
 
 export interface ShowcaseHighlightFeatureBase {
   description: string;
@@ -64,11 +62,8 @@ export function HighlightFeature({
     isUpdate = typeof value !== "undefined";
 
   const submitUpdate = async (formValues: any) => {
-    const payload = Object.keys(formState.dirtyFields).reduce((obj, key) => {
-      const newObj = { ...obj };
-      set(newObj, key, get(formValues, key));
-      return newObj;
-    }, {});
+    console.log(value);
+    const payload = diff(value, formValues);
 
     console.log(payload);
     await onUpdate!(payload);
