@@ -31,7 +31,7 @@ export const VthThemeContext = createContext<VthThemeContext | undefined>(
   undefined
 );
 
-export default function VthThemeProvider({
+export function VthThemeProvider({
   config,
   children,
 }: VthThemeProviderProps): JSX.Element {

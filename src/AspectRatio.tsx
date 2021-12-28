@@ -35,4 +35,4 @@ AspectRatio.defaultProps = {
   ratio: "1/1",
 };
 
-export default AspectRatio;
+export { AspectRatio };

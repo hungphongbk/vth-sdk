@@ -1,25 +1,11 @@
-export { default as AspectRatio } from "./AspectRatio";
-export * from "./AspectRatio";
-
-export * as Constants from "./constants";
-
-export { default as FormInput } from "./FormInput";
-
-export { default as HighlightFeature } from "./HighlightFeature";
-export * from "./HighlightFeature";
-
-export { default as ListEditor } from "./ListEditor";
-export * from "./ListEditor";
-
-export { default as ImageUploader } from "./ImageUploader";
-export * from "./ImageUploader";
-
-export * from "./services";
-
-export * from "./SimpleTableRoot";
-
-export { default as VthThemeProvider } from "./VthThemeProvider";
-export * from "./VthThemeProvider";
-
-export * from "./__graphql";
-export * from "./utils";
+export * from "./__graphql"
+export * from "./AspectRatio"
+export * from "./constants"
+export * from "./content-crud-adapter"
+export * from "./FormInput"
+export * from "./HighlightFeature"
+export * from "./ImageUploader"
+export * from "./ListEditor"
+export * from "./SimpleTableRoot"
+export * from "./utils"
+export * from "./VthThemeProvider"

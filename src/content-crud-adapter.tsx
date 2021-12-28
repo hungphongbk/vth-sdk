@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ListEditor, { ListEditorProps } from "./ListEditor";
+import { ListEditor, ListEditorProps } from "./ListEditor";
 import { useForm } from "react-hook-form";
 import {
   MutationHookOptions,
@@ -96,7 +96,7 @@ function InnerAdapter({
   );
 }
 
-export default function ContentCrudAdapter({
+export function ContentCrudAdapter({
   mode,
   hooks,
   ...props

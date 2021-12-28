@@ -1,5 +1,5 @@
 import React, { EventHandler, SyntheticEvent, useState } from "react";
-import AspectRatio from "./AspectRatio";
+import { AspectRatio } from "./AspectRatio";
 import { sxFlexCenter, sxFullSize, sxFullSizeAbsolute } from "./utils";
 import {
   Box,
@@ -10,12 +10,12 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import PlusIcon from "./assets/PlusIcon";
+import { PlusIcon } from "./assets/PlusIcon";
 import { useForm } from "react-hook-form";
-import FormInput from "./FormInput";
-import ImageUploader, { MediaBase } from "./ImageUploader";
+import { FormInput } from "./FormInput";
 import { useVthTheme } from "./VthThemeProvider";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { ImageUploader, MediaBase } from "./ImageUploader";
 
 export interface ShowcaseHighlightFeatureBase {
   description: string;
@@ -39,7 +39,7 @@ export type HighlightFeatureProps = {
   onUpdate?: (value: any) => boolean | Promise<boolean>;
   DialogProps?: Partial<DialogProps>;
 };
-export default function HighlightFeature({
+export function HighlightFeature({
   name,
   value,
   onChange,

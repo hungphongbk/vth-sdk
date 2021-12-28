@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material";
 import { Control, useFieldArray } from "react-hook-form";
 import React, { ComponentType } from "react";
-import FormInput from "./FormInput";
+import { FormInput } from "./FormInput";
 import { uniqueId } from "lodash";
 
 export type ListEditorOptions = {
@@ -18,7 +18,7 @@ export type ListEditorProps = {
   ListComponentProps?: any;
   options?: ListEditorOptions;
 };
-export default function ListEditor({
+export function ListEditor({
   name,
   control,
   ItemComponent,

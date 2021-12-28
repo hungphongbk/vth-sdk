@@ -153,4 +153,4 @@ function FormInput<
   );
 }
 
-export default FormInput;
+export { FormInput };

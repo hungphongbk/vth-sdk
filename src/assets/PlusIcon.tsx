@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export default function PlusIcon(props: SvgIconProps): JSX.Element {
+export function PlusIcon(props: SvgIconProps): JSX.Element {
   return (
     <SvgIcon viewBox="0 0 12 12" fill="none" {...props}>
       <path

@@ -8,9 +8,9 @@ import React, {
 import { styled } from "@mui/material/styles";
 import { uniqueId } from "lodash";
 import { Box, CircularProgress, IconButton } from "@mui/material";
-import { sxFlexCenter, sxFullSize } from "./utils/predefinedSx";
+import { sxFlexCenter, sxFullSize } from "./utils";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AspectRatio, { AspectRatioProps } from "./AspectRatio";
+import { AspectRatio, AspectRatioProps } from "./AspectRatio";
 import { useVthTheme } from "./VthThemeProvider";
 
 const StyledLabel = styled("label")`
@@ -49,7 +49,7 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
   onDelete?: () => void | Promise<void>;
 };
 
-export default function ImageUploader<T extends MediaBase = MediaBase>({
+export function ImageUploader<T extends MediaBase = MediaBase>({
   name,
   value,
   onChange,
