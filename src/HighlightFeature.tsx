@@ -62,10 +62,9 @@ export function HighlightFeature({
     isUpdate = typeof value !== "undefined";
 
   const submitUpdate = async (formValues: any) => {
-    console.log(value);
-    const payload = diff(value, formValues);
+    const payload: any = diff(value, formValues);
+    payload.id = value.id;
 
-    console.log(payload);
     await onUpdate!(payload);
   };
   const handleChange = async (values: any, event: any) => {
