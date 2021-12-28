@@ -1,9 +1,9 @@
-enum SettingKeys {
+export enum SettingKeys {
   Banner = "common:banner",
   SiteInfo = "common:siteInfo",
 }
 
-const SubmitInvestorConstants = {
+export const SubmitInvestorConstants = {
   purposes: [
     "Xây dựng thương hiệu Việt",
     "Mở rộng ngành hàng mới",
