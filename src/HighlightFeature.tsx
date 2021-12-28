@@ -66,7 +66,7 @@ export function HighlightFeature({
       const newObj = { ...obj };
       set(newObj, key, get(formValues, key));
       return newObj;
-    }, formValues);
+    }, {});
 
     console.log(payload);
     await onUpdate!(payload);
