@@ -7,7 +7,7 @@ const AspectRatio = styled(Box)<AspectRatioProps>`
   @supports (aspect-ratio: 1/1) {
     aspect-ratio: calc(${(props) => props.ratio});
   }
-  > :first-child {
+  > :first-of-type {
     position: absolute;
     top: 0;
     left: 0;
