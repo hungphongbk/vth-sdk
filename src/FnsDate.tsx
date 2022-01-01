@@ -10,5 +10,5 @@ export function FnsDate(props: FnsDateProps) {
     if (typeof props.value === "string") return new Date(props.value);
     return props.value;
   }, [props.value]);
-  return format(value, props.format);
+  return format(value, props.format) as unknown as JSX.Element;
 }
