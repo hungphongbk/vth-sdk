@@ -77,7 +77,7 @@ function FormInput<
     return {
       ...others,
       name,
-      value: isNaN(value) || value === 0 ? "" : value.toString(),
+      value: isNaN(value) || value === 0 ? "" : value?.toString() ?? "",
       onChange: (e: any) => onChange(transformNumberChange(e)),
     };
   };
