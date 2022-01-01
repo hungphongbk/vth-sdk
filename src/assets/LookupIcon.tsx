@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export default function LookupIcon(props: SvgIconProps): JSX.Element {
+export function LookupIcon(props: SvgIconProps): JSX.Element {
   return (
     <SvgIcon {...props} viewBox="0 0 12 12">
       <path

@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export default function ComingSoonIcon(props: SvgIconProps): JSX.Element {
+export function ComingSoonIcon(props: SvgIconProps): JSX.Element {
   return (
     <SvgIcon {...props} viewBox="0 0 10 10">
       <path

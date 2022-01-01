@@ -1,7 +1,7 @@
 import React from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
 
-export default function IdeaBulbIcon(props: SvgIconProps): JSX.Element {
+export function IdeaBulbIcon(props: SvgIconProps): JSX.Element {
   return (
     <SvgIcon viewBox="0 0 10 15" {...props}>
       <path
