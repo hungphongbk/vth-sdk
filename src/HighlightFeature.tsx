@@ -135,7 +135,6 @@ export function HighlightFeature(inProps: HighlightFeatureProps): JSX.Element {
           <HighlightFeatureThumbnail
             className={classes.thumbnail}
             ratio={"307/160"}
-            sx={{ borderRadius: 4, overflow: "hidden" }}
           >
             <Box
               sx={[
