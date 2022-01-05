@@ -17,7 +17,7 @@
             "esnext",
             "dom"
         ],
-        "types": ["jest"],
+        "types": ["node","react"],
         "allowJs": true,
         "jsx": "react",
         "declaration": true,
@@ -34,6 +34,8 @@
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "isolatedModules": true,
+        "noEmit": false
     }
 }

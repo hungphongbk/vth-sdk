@@ -32,6 +32,10 @@ export default {
           dest: "dist/themeAugmentation",
         },
         {
+          src: "index.js",
+          dest: "dist/themeAugmentation",
+        },
+        {
           src: "package.json",
           dest: "dist",
           transform: (contents, filename) => {

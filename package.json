@@ -103,5 +103,6 @@
   },
   "dependencies": {
     "deep-object-diff": "^1.1.0"
-  }
+  },
+  "sideEffects": false
 }
