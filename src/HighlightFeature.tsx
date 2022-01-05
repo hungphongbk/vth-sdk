@@ -10,9 +10,15 @@ import {
   Button,
   DialogContent,
   DialogProps,
+  generateUtilityClass,
+  generateUtilityClasses,
   Grid,
   Stack,
+  styled,
+  Theme,
   Typography,
+  unstable_composeClasses,
+  useThemeProps,
 } from "@mui/material";
 import { PlusIcon } from "./assets/PlusIcon";
 import { useForm } from "react-hook-form";
@@ -21,6 +27,12 @@ import { useVthTheme } from "./VthThemeProvider";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { ImageUploader, MediaBase } from "./ImageUploader";
 import { diff } from "deep-object-diff";
+
+export interface HighlightFeatureClasses {
+  root: string;
+  thumbnail: string;
+}
+export type HighlightFeatureClassKey = keyof HighlightFeatureClasses;
 
 export interface ShowcaseHighlightFeatureBase {
   description: string;
@@ -38,19 +50,44 @@ interface Change<T = Element> extends SyntheticEvent<T> {
 type ChangeEventHandler<T = Element> = EventHandler<Change<T>>;
 
 export type HighlightFeatureProps = {
+  classes?: Partial<HighlightFeatureClasses>;
   name: string;
   value: ShowcaseHighlightFeatureBase;
   onChange: ChangeEventHandler;
   onUpdate?: (value: any) => boolean | Promise<boolean>;
   DialogProps?: Partial<DialogProps>;
 };
-export function HighlightFeature({
-  name,
-  value,
-  onChange,
-  onUpdate,
-  DialogProps: _DialogProps = {},
-}: HighlightFeatureProps): JSX.Element {
+
+export const getHighlightFeatureClass = (slot: string) =>
+  generateUtilityClass("HighlightFeature", slot);
+export const highlightFeatureClasses: HighlightFeatureClasses =
+  generateUtilityClasses("HighlightFeature", ["root", "thumbnail"]);
+const useUtilityClasses = (props: HighlightFeatureProps) => {
+  const { classes } = props,
+    slots = {
+      root: ["root"],
+      thumbnail: ["thumbnail"],
+    };
+  return unstable_composeClasses(slots, getHighlightFeatureClass, classes);
+};
+
+const HighlightFeatureThumbnail = styled(AspectRatio, {
+  name: "HighlightFeature",
+  slot: "thumbnail",
+  overridesResolver: (props, styles) => styles.thumbnail,
+})`
+  border-radius: 16px;
+  overflow: hidden;
+`;
+
+export function HighlightFeature(inProps: HighlightFeatureProps): JSX.Element {
+  const props = useThemeProps<Theme, HighlightFeatureProps, "HighlightFeature">(
+      {
+        props: inProps,
+        name: "HighlightFeature",
+      }
+    ),
+    { name, value, onChange, onUpdate, DialogProps: _DialogProps = {} } = props;
   const {
     components: { Dialog, TextField, MultilineTextField },
   } = useVthTheme();
@@ -89,11 +126,14 @@ export function HighlightFeature({
     }
   };
 
+  const classes = useUtilityClasses(props);
+
   return (
     <>
       {value && value.image ? (
         <>
-          <AspectRatio
+          <HighlightFeatureThumbnail
+            className={classes.thumbnail}
             ratio={"307/160"}
             sx={{ borderRadius: 4, overflow: "hidden" }}
           >
@@ -124,7 +164,7 @@ export function HighlightFeature({
                 CHỈNH SỬA
               </Button>
             </Box>
-          </AspectRatio>
+          </HighlightFeatureThumbnail>
           <Typography
             sx={{ fontSize: 15, fontWeight: 600, textTransform: "uppercase" }}
           >
