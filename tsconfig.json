@@ -18,7 +18,7 @@
             "dom"
         ],
         "types": ["jest"],
-        "allowJs": false,
+        "allowJs": true,
         "jsx": "react",
         "declaration": true,
         "sourceMap": true,

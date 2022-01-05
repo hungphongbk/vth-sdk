@@ -28,6 +28,10 @@ export default {
       targets: [
         { src: ".npmrc", dest: "dist" },
         {
+          src: "src/themeAugmentation/package.json",
+          dest: "dist/themeAugmentation",
+        },
+        {
           src: "package.json",
           dest: "dist",
           transform: (contents, filename) => {
