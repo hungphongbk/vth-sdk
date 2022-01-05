@@ -59,7 +59,7 @@ export function HighlightFeature({
       defaultValues: value ?? {},
     }),
     { control, handleSubmit, formState } = form,
-    isUpdate = typeof value !== "undefined";
+    isUpdate = typeof value !== "undefined" && !/^draft/.test(value.id);
 
   const submitUpdate = async (formValues: any) => {
     const payload: any = diff(value, formValues);

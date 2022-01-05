@@ -22,7 +22,7 @@ export function ListEditor({
   name,
   control,
   ItemComponent,
-  itemGenerator = () => ({ id: uniqueId() }),
+  itemGenerator = () => ({ id: `draft-${uniqueId()}` }),
   ListComponent = Stack,
   ListComponentProps = {},
   options: _options = {},
