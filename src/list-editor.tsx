@@ -45,8 +45,10 @@ export function ListEditor({
   const doDelete = useCallback(
     async (index: any, value: any) => {
       if (!options.deletable) return;
-      if (value && options.onDelete) await options.onDelete(value);
-      remove(index);
+      if (value && options.onDelete) {
+        const rs = await options.onDelete(value);
+        if (!rs) remove(index);
+      }
     },
     [options, remove]
   );
