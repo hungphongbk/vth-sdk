@@ -31,6 +31,7 @@ import { diff } from "deep-object-diff";
 export interface HighlightFeatureClasses {
   root: string;
   thumbnail: string;
+  name: string;
 }
 export type HighlightFeatureClassKey = keyof HighlightFeatureClasses;
 
@@ -61,12 +62,13 @@ export type HighlightFeatureProps = {
 export const getHighlightFeatureClass = (slot: string) =>
   generateUtilityClass("HighlightFeature", slot);
 export const highlightFeatureClasses: HighlightFeatureClasses =
-  generateUtilityClasses("HighlightFeature", ["root", "thumbnail"]);
+  generateUtilityClasses("HighlightFeature", ["root", "thumbnail", "name"]);
 const useUtilityClasses = (props: HighlightFeatureProps) => {
   const { classes } = props,
     slots = {
       root: ["root"],
       thumbnail: ["thumbnail"],
+      name: ["name"],
     };
   return unstable_composeClasses(slots, getHighlightFeatureClass, classes);
 };
@@ -165,7 +167,13 @@ export function HighlightFeature(inProps: HighlightFeatureProps): JSX.Element {
             </Box>
           </HighlightFeatureThumbnail>
           <Typography
-            sx={{ fontSize: 15, fontWeight: 600, textTransform: "uppercase" }}
+            sx={{
+              fontSize: 15,
+              fontWeight: 600,
+              textTransform: "uppercase",
+              mt: 1,
+            }}
+            className={classes.name}
           >
             {value.name}
           </Typography>
