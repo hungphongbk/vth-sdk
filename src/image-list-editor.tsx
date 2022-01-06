@@ -10,7 +10,7 @@ import { IMAGE_LIST_EDITOR } from "./constants";
 import { ListEditor, ListEditorProps } from "./list-editor";
 import { Control, useController } from "react-hook-form";
 import { ImageUploader, ImageUploaderProps } from "./image-uploader";
-import { MutationHooks } from "./types";
+import { MutationHooks, RefetchQueryHooks } from "./types";
 import { omit } from "lodash";
 import { MutationHookOptions } from "@apollo/client/react/types/types";
 
@@ -49,6 +49,8 @@ const useUtilityClasses = (props: ImageListEditorPropsInner) => {
 type ImageListEditorProps = Omit<ImageListEditorPropsInner, "options"> & {
   mode: "add" | "edit";
   hooks: {
+    refetchQuery: RefetchQueryHooks;
+    refetchQueryArgs: any;
     createNewMutation: MutationHooks;
     createNewMutationArgs: MutationHookOptions;
     addMutation: MutationHooks;
@@ -62,11 +64,17 @@ const withImageListEditorWrapper = (
     const {
       field: { value },
     } = useController({ name: props.name, control });
-    const [addMutation] = hooks.addMutation({}),
-      [deleteMutation] = hooks.deleteMutation({}),
-      [createNewMutation] = hooks.createNewMutation(
-        hooks.createNewMutationArgs
-      );
+    const refetcher = hooks.refetchQuery(hooks.refetchQueryArgs),
+      [addMutation] = hooks.addMutation({
+        refetchQueries: [refetcher],
+      }),
+      [deleteMutation] = hooks.deleteMutation({
+        refetchQueries: [refetcher],
+      }),
+      [createNewMutation] = hooks.createNewMutation({
+        ...hooks.createNewMutationArgs,
+        refetchQueries: [refetcher],
+      });
 
     console.log(value);
 
@@ -126,7 +134,7 @@ export const ImageListEditor = withImageListEditorWrapper(
 
     return (
       <ListEditor
-        name={name}
+        name={`${name}.0.images`}
         control={control}
         options={options}
         ItemComponent={ImageUploader}
