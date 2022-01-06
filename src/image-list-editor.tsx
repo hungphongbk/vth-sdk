@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { IMAGE_LIST_EDITOR } from "./constants";
 import { ListEditor, ListEditorProps } from "./list-editor";
-import { Control, useController } from "react-hook-form";
+import { Control, useController, useWatch } from "react-hook-form";
 import { ImageUploader, ImageUploaderProps } from "./image-uploader";
 import { MutationHooks, RefetchQueryHooks } from "./types";
 import { omit } from "lodash";
@@ -63,6 +63,7 @@ const withImageListEditorWrapper = (
     const {
       field: { value },
     } = useController({ name: props.name, control });
+    useWatch({ name: props.name, control });
     const [addMutation] = hooks.addMutation({
         refetchQueries: [hooks.refetchQuery],
       }),
