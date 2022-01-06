@@ -11,6 +11,7 @@ import { ListEditor, ListEditorProps } from "./list-editor";
 import { Control, useController, useForm } from "react-hook-form";
 import { ImageUploader, ImageUploaderProps } from "./image-uploader";
 import { MutationHooks } from "./types";
+import { omit } from "lodash";
 
 export interface ImageListEditorClasses {
   root: string;
@@ -61,6 +62,8 @@ const withImageListEditorWrapper = (
       {
         field: { value },
       } = useController({ name: props.name, control: _control });
+    const [addMutation] = hooks.addMutation({}),
+      [deleteMutation] = hooks.deleteMutation({});
 
     const options = useMemo<ListEditorProps["options"]>(() => {
       if (mode === "add") return { deletable: true };
@@ -68,13 +71,19 @@ const withImageListEditorWrapper = (
       return {
         deletable: true,
         onAppend: async (value) => {
+          await addMutation({
+            variables: { id, input: omit(value, ["__typename", "id"]) },
+          });
           return true;
         },
-        onUpdate: async (value) => {
+        onDelete: async (value) => {
+          await deleteMutation({
+            variables: { id, mediaId: value.id },
+          });
           return true;
         },
       };
-    }, [mode, value]);
+    }, [addMutation, deleteMutation, mode, value]);
 
     return <Component control={_control} options={options} {...props} />;
   }
