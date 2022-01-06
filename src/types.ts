@@ -6,7 +6,7 @@ import {
 } from "@apollo/client/react/types/types";
 import { DocumentNode } from "@apollo/client";
 
-export type RefetchQueryHooks<TD = any, TV = any> = (variables: TV) => {
+export type RefetchQueryHooks<TD = any, TV = any> = {
   query: DocumentNode;
   variables: TV;
 };

@@ -50,7 +50,6 @@ type ImageListEditorProps = Omit<ImageListEditorPropsInner, "options"> & {
   mode: "add" | "edit";
   hooks: {
     refetchQuery: RefetchQueryHooks;
-    refetchQueryArgs: any;
     createNewMutation: MutationHooks;
     createNewMutationArgs: MutationHookOptions;
     addMutation: MutationHooks;
@@ -64,16 +63,15 @@ const withImageListEditorWrapper = (
     const {
       field: { value },
     } = useController({ name: props.name, control });
-    const refetcher = hooks.refetchQuery(hooks.refetchQueryArgs),
-      [addMutation] = hooks.addMutation({
-        refetchQueries: [refetcher],
+    const [addMutation] = hooks.addMutation({
+        refetchQueries: [hooks.refetchQuery],
       }),
       [deleteMutation] = hooks.deleteMutation({
-        refetchQueries: [refetcher],
+        refetchQueries: [hooks.refetchQuery],
       }),
       [createNewMutation] = hooks.createNewMutation({
         ...hooks.createNewMutationArgs,
-        refetchQueries: [refetcher],
+        refetchQueries: [hooks.refetchQuery],
       });
 
     console.log(value);
