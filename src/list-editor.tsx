@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { Control, useFieldArray } from "react-hook-form";
-import React, { ComponentType } from "react";
+import React, { ComponentType, useCallback, useMemo } from "react";
 import { FormInput } from "./FormInput";
 import { uniqueId } from "lodash";
 
@@ -8,6 +8,7 @@ export type ListEditorOptions = {
   deletable?: boolean;
   onAppend?: (value: any) => boolean | Promise<boolean>;
   onUpdate?: (value: any) => boolean | Promise<boolean>;
+  onDelete?: (value: any) => boolean | Promise<Boolean>;
 };
 export type ListEditorProps = {
   name: string;
@@ -31,12 +32,24 @@ export function ListEditor({
 }: ListEditorProps): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { fields, append, remove } = useFieldArray({ control, name });
-  const options: ListEditorOptions = { deletable: false, ..._options };
+  const options: ListEditorOptions = useMemo(
+    () => ({ deletable: false, ..._options }),
+    [_options]
+  );
 
   const finishEditTemp = async (e: any) => {
     const rs = (await options.onAppend?.(e.target.value)) ?? true;
     if (rs) append(e.target.value);
   };
+
+  const doDelete = useCallback(
+    async (index: any, value: any) => {
+      if (!options.deletable) return;
+      if (value && options.onDelete) await options.onDelete(value);
+      remove(index);
+    },
+    [options, remove]
+  );
 
   return (
     <ListComponent {...ListComponentProps}>
@@ -46,7 +59,7 @@ export function ListEditor({
           key={field.id}
           control={control}
           component={ItemComponent}
-          onDelete={() => options.deletable && remove(index)}
+          onDelete={(value: any) => doDelete(index, value)}
           onUpdate={options.onUpdate}
           {...ItemComponentProps}
         />

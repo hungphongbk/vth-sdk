@@ -9,7 +9,7 @@ import {
 import { IMAGE_LIST_EDITOR } from "./constants";
 import { ListEditor, ListEditorProps } from "./list-editor";
 import { Control, useController, useForm } from "react-hook-form";
-import { ImageUploader } from "./image-uploader";
+import { ImageUploader, ImageUploaderProps } from "./image-uploader";
 import { MutationHooks } from "./types";
 
 export interface ImageListEditorClasses {
@@ -25,6 +25,7 @@ export interface ImageListEditorPropsInner
   classes?: Partial<ImageListEditorClasses>;
   name: string;
   onUpdate?: (value: any) => boolean | Promise<boolean>;
+  ImageUploaderProps?: Partial<ImageUploaderProps>;
 }
 
 export const getImageListEditorClass = (slot: string) =>
@@ -44,7 +45,7 @@ type ImageListEditorProps = Omit<ImageListEditorPropsInner, "options"> & {
   mode: "add" | "edit";
   hooks: {
     addMutation: MutationHooks;
-    updateMutation: MutationHooks;
+    deleteMutation: MutationHooks;
   };
 };
 const withImageListEditorWrapper = (
@@ -91,7 +92,7 @@ export const ImageListEditor = withImageListEditorWrapper(
         props: inProps,
         name: IMAGE_LIST_EDITOR,
       }),
-      { name, control, options } = props;
+      { name, control, options, ImageUploaderProps = {} } = props;
 
     const classes = useUtilityClasses(props);
 
@@ -101,6 +102,12 @@ export const ImageListEditor = withImageListEditorWrapper(
         control={control}
         options={options}
         ItemComponent={ImageUploader}
+        ItemComponentProps={{
+          ...ImageUploaderProps,
+          classes: {
+            root: classes.thumbnail,
+          },
+        }}
       />
     );
   }

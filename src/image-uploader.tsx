@@ -65,14 +65,16 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
   value?: T;
   onChange?: UploadEventHandler;
   required?: boolean;
-  onDelete?: () => void | Promise<void>;
+  onDelete?: (value: T) => void | Promise<void>;
 };
 
 export const getImageUploaderClass = (slot: string) =>
   generateUtilityClass(IMAGE_UPLOADER, slot);
 export const imageUploaderClasses: ImageUploaderClasses =
   generateUtilityClasses(IMAGE_UPLOADER, ["root", "deleteButton"]);
-const useUtilityClasses = (props: ImageUploaderProps) => {
+const useUtilityClasses = <T extends MediaBase = MediaBase>(
+  props: ImageUploaderProps<T>
+) => {
   const { classes } = props,
     slots = {
       root: ["root"],
@@ -161,7 +163,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   };
 
   const handleRemove = async (event: any) => {
-    if (onDelete) await onDelete();
+    if (onDelete) await onDelete(value!);
     await emitChange(event, undefined);
   };
 
