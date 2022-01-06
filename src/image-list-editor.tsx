@@ -82,9 +82,7 @@ const withImageListEditorWrapper = (
           let id = value.id;
           if (!id) {
             const {
-              data: {
-                createOneImageList: { imageList },
-              },
+              data: { createOneImageList: imageList },
             } = await createNewMutation();
             id = imageList.id;
           }
