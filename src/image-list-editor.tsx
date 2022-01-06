@@ -61,7 +61,7 @@ const withImageListEditorWrapper = (
   function Wrapper({ control, mode, hooks, ...props }: ImageListEditorProps) {
     const form = useForm({
         defaultValues: {
-          imageList: [{ images: [] }],
+          imageLists: [{ images: [] }],
         },
       }),
       _control = mode === "add" ? control : form.control,
