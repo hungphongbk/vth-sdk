@@ -12,6 +12,7 @@ import { Control, useController, useForm } from "react-hook-form";
 import { ImageUploader, ImageUploaderProps } from "./image-uploader";
 import { MutationHooks } from "./types";
 import { omit } from "lodash";
+import { MutationHookOptions } from "@apollo/client/react/types/types";
 
 export interface ImageListEditorClasses {
   root: string;
@@ -48,6 +49,8 @@ const useUtilityClasses = (props: ImageListEditorPropsInner) => {
 type ImageListEditorProps = Omit<ImageListEditorPropsInner, "options"> & {
   mode: "add" | "edit";
   hooks: {
+    createNewMutation: MutationHooks;
+    createNewMutationArgs: MutationHookOptions;
     addMutation: MutationHooks;
     deleteMutation: MutationHooks;
   };
@@ -66,27 +69,35 @@ const withImageListEditorWrapper = (
         field: { value },
       } = useController({ name: props.name, control: _control });
     const [addMutation] = hooks.addMutation({}),
-      [deleteMutation] = hooks.deleteMutation({});
+      [deleteMutation] = hooks.deleteMutation({}),
+      [createNewMutation] = hooks.createNewMutation(
+        hooks.createNewMutationArgs
+      );
 
     const options = useMemo<ListEditorProps["options"]>(() => {
       if (mode === "add") return { deletable: true };
-      const { id } = value;
       return {
         deletable: true,
-        onAppend: async (value) => {
+        onAppend: async (val) => {
+          let id = value.id;
+          if (!id) {
+            const { data: imageList } = await createNewMutation();
+            id = imageList.id;
+          }
           await addMutation({
-            variables: { id, input: omit(value, ["__typename", "id"]) },
+            variables: { id, input: omit(val, ["__typename", "id"]) },
           });
           return true;
         },
-        onDelete: async (value) => {
+        onDelete: async (val) => {
+          const id = value.id;
           await deleteMutation({
-            variables: { id, mediaId: value.id },
+            variables: { id, mediaId: val.id },
           });
           return true;
         },
       };
-    }, [addMutation, deleteMutation, mode, value]);
+    }, [mode, value.id, addMutation, createNewMutation, deleteMutation]);
 
     return <Component control={_control} options={options} {...props} />;
   }
