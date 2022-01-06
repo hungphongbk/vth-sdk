@@ -26,6 +26,7 @@ import { IMAGE_UPLOADER } from "./constants";
 
 export interface ImageUploaderClasses {
   root: string;
+  deleteButton: string;
 }
 export type ImageUploaderClassKey = keyof ImageUploaderClasses;
 
@@ -70,11 +71,12 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
 export const getImageUploaderClass = (slot: string) =>
   generateUtilityClass(IMAGE_UPLOADER, slot);
 export const imageUploaderClasses: ImageUploaderClasses =
-  generateUtilityClasses(IMAGE_UPLOADER, ["root"]);
+  generateUtilityClasses(IMAGE_UPLOADER, ["root", "deleteButton"]);
 const useUtilityClasses = (props: ImageUploaderProps) => {
   const { classes } = props,
     slots = {
       root: ["root"],
+      deleteButton: ["deleteButton"],
     };
   return unstable_composeClasses(slots, getImageUploaderClass, classes);
 };
@@ -88,6 +90,12 @@ const ImageUploaderThumbnail = styled(AspectRatio, {
     border: 1px dashed ${theme.palette.divider};
   `
 );
+
+const ImageUploaderDeleteButton = styled(IconButton, {
+  name: IMAGE_UPLOADER,
+  slot: "deleteButton",
+  overridesResolver: (props, styles) => styles.deleteButton,
+})(({ theme }) => css``);
 
 export function ImageUploader<T extends MediaBase = MediaBase>(
   inProps: PropsWithChildren<ImageUploaderProps<T>>
@@ -181,7 +189,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
           }}
         >
           <img src={value.path ?? ""} alt="preview" />
-          <IconButton
+          <ImageUploaderThumbnail
             size={"small"}
             sx={{
               position: "absolute",
@@ -192,10 +200,11 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
                 bgcolor: "primary.dark",
               },
             }}
+            className={classes.deleteButton}
             onClick={handleRemove}
           >
             <DeleteIcon />
-          </IconButton>
+          </ImageUploaderThumbnail>
         </Box>
       )}
     </ImageUploaderThumbnail>
