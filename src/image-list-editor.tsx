@@ -81,7 +81,7 @@ const withImageListEditorWrapper = (
       return {
         deletable: true,
         onAppend: async (val) => {
-          let id = value?.id;
+          let id = value?.[0]?.id;
           if (!id) {
             const {
               data: { createOneImageList: imageList },
@@ -94,7 +94,7 @@ const withImageListEditorWrapper = (
           return true;
         },
         onDelete: async (val) => {
-          const id = value!.id;
+          const id = value![0]!.id;
           await deleteMutation({
             variables: { id, mediaId: val.id },
           });
