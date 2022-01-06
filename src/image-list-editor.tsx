@@ -21,7 +21,10 @@ export interface ImageListEditorClasses {
 export type ImageListEditorClassKey = keyof ImageListEditorClasses;
 
 export interface ImageListEditorPropsInner
-  extends Pick<ListEditorProps, "options"> {
+  extends Pick<
+    ListEditorProps,
+    "options" | "ListComponent" | "ListComponentProps"
+  > {
   control: Control<any>;
   classes?: Partial<ImageListEditorClasses>;
   name: string;
@@ -101,7 +104,14 @@ export const ImageListEditor = withImageListEditorWrapper(
         props: inProps,
         name: IMAGE_LIST_EDITOR,
       }),
-      { name, control, options, ImageUploaderProps = {} } = props;
+      {
+        name,
+        control,
+        options,
+        ImageUploaderProps = {},
+        ListComponent,
+        ListComponentProps,
+      } = props;
 
     const classes = useUtilityClasses(props);
 
@@ -117,6 +127,8 @@ export const ImageListEditor = withImageListEditorWrapper(
             root: classes.thumbnail,
           },
         }}
+        ListComponent={ListComponent}
+        ListComponentProps={ListComponentProps}
       />
     );
   }
