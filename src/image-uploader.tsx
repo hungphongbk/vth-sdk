@@ -163,8 +163,9 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   };
 
   const handleRemove = async (event: any) => {
-    if (onDelete) await onDelete(value!);
-    await emitChange(event, undefined);
+    if (onDelete) {
+      await onDelete(value!);
+    } else await emitChange(event, undefined);
   };
 
   const classes = useUtilityClasses(props);
