@@ -1,7 +1,9 @@
-import { HighlightFeatureClassKey } from "../HighlightFeature";
+import { HighlightFeatureClassKey } from "../highlight-feature";
+import { ImageUploaderClassKey } from "../image-uploader";
 
 export interface VthComponentNameToClassKey {
   HighlightFeature: HighlightFeatureClassKey;
+  ImageUploader: ImageUploaderClassKey;
 }
 
 declare module "@mui/material/styles" {

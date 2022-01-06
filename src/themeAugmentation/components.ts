@@ -10,6 +10,11 @@ export interface VthComponents {
     styleOverrides?: ComponentsOverrides["HighlightFeature"];
     variants?: ComponentsVariants["HighlightFeature"];
   };
+  ImageUploader?: {
+    defaultProps?: ComponentsProps["ImageUploader"];
+    styleOverrides?: ComponentsOverrides["ImageUploader"];
+    variants?: ComponentsVariants["ImageUploader"];
+  };
 }
 
 declare module "@mui/material/styles" {

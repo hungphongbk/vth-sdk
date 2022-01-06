@@ -1,20 +1,8 @@
 import React, { useEffect } from "react";
-import { ListEditor, ListEditorProps } from "./ListEditor";
+import { ListEditor, ListEditorProps } from "./list-editor";
 import { useForm } from "react-hook-form";
-import {
-  MutationHookOptions,
-  MutationTuple,
-  QueryHookOptions,
-  QueryResult,
-} from "@apollo/client/react/types/types";
 import { cloneDeep, get, omit } from "lodash";
-
-type QueryHooks<TD = any, TV = any> = (
-  baseOptions: QueryHookOptions<TD, TV>
-) => QueryResult<TD, TV>;
-type MutationHooks<TD = any, TV = any> = (
-  baseOptions: MutationHookOptions<TD, TV>
-) => MutationTuple<TD, TV>;
+import { MutationHooks, QueryHooks } from "./types";
 
 type ShowcaseContentCrudAdapterProps = ListEditorProps & {
   mode: "add" | "edit";

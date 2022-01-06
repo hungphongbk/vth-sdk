@@ -13,6 +13,7 @@ export type ListEditorProps = {
   name: string;
   control: Control<any>;
   ItemComponent: ComponentType<any>;
+  ItemComponentProps?: any;
   itemGenerator?: (index: number) => any;
   ListComponent?: ComponentType<any>;
   ListComponentProps?: any;
@@ -22,6 +23,7 @@ export function ListEditor({
   name,
   control,
   ItemComponent,
+  ItemComponentProps = {},
   itemGenerator = () => ({ id: `draft-${uniqueId()}` }),
   ListComponent = Stack,
   ListComponentProps = {},
@@ -46,12 +48,14 @@ export function ListEditor({
           component={ItemComponent}
           onDelete={() => options.deletable && remove(index)}
           onUpdate={options.onUpdate}
+          {...ItemComponentProps}
         />
       ))}
       <ItemComponent
         key={`new-${fields.length}`}
         value={itemGenerator(fields.length)}
         onChange={finishEditTemp}
+        {...ItemComponentProps}
       />
     </ListComponent>
   );

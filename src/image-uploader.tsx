@@ -7,11 +7,27 @@ import React, {
 } from "react";
 import { styled } from "@mui/material/styles";
 import { uniqueId } from "lodash";
-import { Box, CircularProgress, IconButton } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  css,
+  generateUtilityClass,
+  generateUtilityClasses,
+  IconButton,
+  Theme,
+  unstable_composeClasses,
+  useThemeProps,
+} from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "./utils/predefinedSx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AspectRatio, AspectRatioProps } from "./AspectRatio";
 import { useVthTheme } from "./VthThemeProvider";
+import { IMAGE_UPLOADER } from "./constants";
+
+export interface ImageUploaderClasses {
+  root: string;
+}
+export type ImageUploaderClassKey = keyof ImageUploaderClasses;
 
 const StyledLabel = styled("label")`
   width: 100%;
@@ -42,6 +58,8 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
   AspectRatioProps,
   "ratio"
 > & {
+  className?: string;
+  classes?: Partial<ImageUploaderClasses>;
   name?: string | undefined;
   value?: T;
   onChange?: UploadEventHandler;
@@ -49,16 +67,43 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
   onDelete?: () => void | Promise<void>;
 };
 
-export function ImageUploader<T extends MediaBase = MediaBase>({
-  name,
-  value,
-  onChange,
-  children,
-  ratio = undefined,
-  onDelete,
-}: PropsWithChildren<ImageUploaderProps<T>>): JSX.Element {
+export const getImageUploaderClass = (slot: string) =>
+  generateUtilityClass(IMAGE_UPLOADER, slot);
+export const imageUploaderClasses: ImageUploaderClasses =
+  generateUtilityClasses(IMAGE_UPLOADER, ["root"]);
+const useUtilityClasses = (props: ImageUploaderProps) => {
+  const { classes } = props,
+    slots = {
+      root: ["root"],
+    };
+  return unstable_composeClasses(slots, getImageUploaderClass, classes);
+};
+
+const ImageUploaderThumbnail = styled(AspectRatio, {
+  name: IMAGE_UPLOADER,
+  slot: "root",
+  overridesResolver: (props, styles) => styles.root,
+})(
+  ({ theme }) => css`
+    border: 1px dashed ${theme.palette.divider};
+  `
+);
+
+export function ImageUploader<T extends MediaBase = MediaBase>(
+  inProps: PropsWithChildren<ImageUploaderProps<T>>
+): JSX.Element {
   const id = uniqueId("file-upload-");
   const [uploading, setUploading] = useState(false);
+
+  const props = useThemeProps<
+      Theme,
+      PropsWithChildren<ImageUploaderProps<T>>,
+      typeof IMAGE_UPLOADER
+    >({
+      props: inProps,
+      name: IMAGE_UPLOADER,
+    }),
+    { name, value, onChange, children, ratio = undefined, onDelete } = props;
 
   const {
     services: { uploadService },
@@ -112,11 +157,10 @@ export function ImageUploader<T extends MediaBase = MediaBase>({
     await emitChange(event, undefined);
   };
 
+  const classes = useUtilityClasses(props);
+
   return (
-    <AspectRatio
-      sx={{ border: 1, borderStyle: "dashed", borderColor: "divider" }}
-      ratio={ratio}
-    >
+    <ImageUploaderThumbnail className={classes.root} ratio={ratio}>
       {!value || !value.path ? (
         <StyledLabel htmlFor={id}>
           <UploadInput
@@ -154,6 +198,6 @@ export function ImageUploader<T extends MediaBase = MediaBase>({
           </IconButton>
         </Box>
       )}
-    </AspectRatio>
+    </ImageUploaderThumbnail>
   );
 }

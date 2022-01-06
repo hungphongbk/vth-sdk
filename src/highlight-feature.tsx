@@ -25,7 +25,7 @@ import { useForm } from "react-hook-form";
 import { FormInput } from "./FormInput";
 import { useVthTheme } from "./VthThemeProvider";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { ImageUploader, MediaBase } from "./ImageUploader";
+import { ImageUploader, MediaBase } from "./image-uploader";
 import { diff } from "deep-object-diff";
 
 export interface HighlightFeatureClasses {
