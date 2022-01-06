@@ -189,7 +189,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
           }}
         >
           <img src={value.path ?? ""} alt="preview" />
-          <ImageUploaderThumbnail
+          <ImageUploaderDeleteButton
             size={"small"}
             sx={{
               position: "absolute",
@@ -204,7 +204,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
             onClick={handleRemove}
           >
             <DeleteIcon />
-          </ImageUploaderThumbnail>
+          </ImageUploaderDeleteButton>
         </Box>
       )}
     </ImageUploaderThumbnail>
