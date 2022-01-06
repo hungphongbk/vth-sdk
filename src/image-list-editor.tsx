@@ -81,7 +81,11 @@ const withImageListEditorWrapper = (
         onAppend: async (val) => {
           let id = value.id;
           if (!id) {
-            const { data: imageList } = await createNewMutation();
+            const {
+              data: {
+                createOneImageList: { imageList },
+              },
+            } = await createNewMutation();
             id = imageList.id;
           }
           await addMutation({
