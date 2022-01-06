@@ -68,12 +68,14 @@ const withImageListEditorWrapper = (
         hooks.createNewMutationArgs
       );
 
+    console.log(value);
+
     const options = useMemo<ListEditorProps["options"]>(() => {
       if (mode === "add") return { deletable: true };
       return {
         deletable: true,
         onAppend: async (val) => {
-          let id = value.id;
+          let id = value?.id;
           if (!id) {
             const {
               data: { createOneImageList: imageList },
@@ -86,14 +88,14 @@ const withImageListEditorWrapper = (
           return true;
         },
         onDelete: async (val) => {
-          const id = value.id;
+          const id = value!.id;
           await deleteMutation({
             variables: { id, mediaId: val.id },
           });
           return true;
         },
       };
-    }, [mode, value.id, addMutation, createNewMutation, deleteMutation]);
+    }, [mode, value, addMutation, createNewMutation, deleteMutation]);
 
     return <Component control={control} options={options} {...props} />;
   }
