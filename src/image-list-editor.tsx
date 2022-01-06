@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { IMAGE_LIST_EDITOR } from "./constants";
 import { ListEditor, ListEditorProps } from "./list-editor";
-import { Control, useController, useForm } from "react-hook-form";
+import { Control, useController } from "react-hook-form";
 import { ImageUploader, ImageUploaderProps } from "./image-uploader";
 import { MutationHooks } from "./types";
 import { omit } from "lodash";
@@ -59,15 +59,9 @@ const withImageListEditorWrapper = (
   Component: ComponentType<ImageListEditorPropsInner>
 ) => {
   function Wrapper({ control, mode, hooks, ...props }: ImageListEditorProps) {
-    const form = useForm({
-        defaultValues: {
-          imageLists: [{ images: [] }],
-        },
-      }),
-      _control = mode === "add" ? control : form.control,
-      {
-        field: { value },
-      } = useController({ name: props.name, control: _control });
+    const {
+      field: { value },
+    } = useController({ name: props.name, control });
     const [addMutation] = hooks.addMutation({}),
       [deleteMutation] = hooks.deleteMutation({}),
       [createNewMutation] = hooks.createNewMutation(
@@ -101,7 +95,7 @@ const withImageListEditorWrapper = (
       };
     }, [mode, value.id, addMutation, createNewMutation, deleteMutation]);
 
-    return <Component control={_control} options={options} {...props} />;
+    return <Component control={control} options={options} {...props} />;
   }
 
   return Wrapper;
