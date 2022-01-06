@@ -55,18 +55,18 @@ export interface MediaBase {
   height: number;
 }
 
-export type ImageUploaderProps<T extends MediaBase = MediaBase> = Pick<
-  AspectRatioProps,
-  "ratio"
-> & {
-  className?: string;
-  classes?: Partial<ImageUploaderClasses>;
-  name?: string | undefined;
-  value?: T;
-  onChange?: UploadEventHandler;
-  required?: boolean;
-  onDelete?: (value: T) => void | Promise<void>;
-};
+export type ImageUploaderProps<T extends MediaBase = MediaBase> =
+  PropsWithChildren<
+    Pick<AspectRatioProps, "ratio"> & {
+      className?: string;
+      classes?: Partial<ImageUploaderClasses>;
+      name?: string | undefined;
+      value?: T;
+      onChange?: UploadEventHandler;
+      required?: boolean;
+      onDelete?: (value: T) => void | Promise<void>;
+    }
+  >;
 
 export const getImageUploaderClass = (slot: string) =>
   generateUtilityClass(IMAGE_UPLOADER, slot);
@@ -100,14 +100,14 @@ const ImageUploaderDeleteButton = styled(IconButton, {
 })(({ theme }) => css``);
 
 export function ImageUploader<T extends MediaBase = MediaBase>(
-  inProps: PropsWithChildren<ImageUploaderProps<T>>
+  inProps: ImageUploaderProps<T>
 ): JSX.Element {
   const id = uniqueId("file-upload-");
   const [uploading, setUploading] = useState(false);
 
   const props = useThemeProps<
       Theme,
-      PropsWithChildren<ImageUploaderProps<T>>,
+      ImageUploaderProps<T>,
       typeof IMAGE_UPLOADER
     >({
       props: inProps,
