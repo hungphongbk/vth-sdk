@@ -1,5 +1,6 @@
 export * from "./__graphql"
 export * from "./AspectRatio"
+export * from "./assets/CheckFilledPrimaryIcon"
 export * from "./assets/ComingSoonIcon"
 export * from "./assets/IdeaBulbIcon"
 export * from "./assets/LookupFilledPrimaryIcon"
