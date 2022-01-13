@@ -3,7 +3,7 @@ import { SvgIcon, SvgIconProps } from "@mui/material";
 
 export function ComingSoonIcon(props: SvgIconProps): JSX.Element {
   return (
-    <SvgIcon {...props} viewBox="0 0 10 10">
+    <SvgIcon color={"inherit"} {...props} viewBox="0 0 10 10">
       <path
         fillRule="evenodd"
         clipRule="evenodd"

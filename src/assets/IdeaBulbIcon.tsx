@@ -3,7 +3,7 @@ import { SvgIcon, SvgIconProps } from "@mui/material";
 
 export function IdeaBulbIcon(props: SvgIconProps): JSX.Element {
   return (
-    <SvgIcon viewBox="0 0 10 15" {...props}>
+    <SvgIcon color={"inherit"} viewBox="0 0 10 15" {...props}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
