@@ -3,7 +3,7 @@ import { SvgIcon, SvgIconProps } from "@mui/material";
 
 export function LookupIcon(props: SvgIconProps): JSX.Element {
   return (
-    <SvgIcon color={"inherit"} {...props} viewBox="0 0 12 12">
+    <SvgIcon color={"inherit"} viewBox="0 0 12 12" {...props}>
       <path
         fillRule="evenodd"
         clipRule="evenodd"
