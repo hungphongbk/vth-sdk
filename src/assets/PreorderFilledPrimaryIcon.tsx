@@ -1,14 +1,12 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { SvgIcon, SvgIconProps } from "@mui/material";
+import { useFilledIconColor } from "../utils/useFilledIconColor";
 
 export function PreorderFilledPrimaryIcon({
   color,
   ...props
 }: SvgIconProps): JSX.Element {
-  const [circleFill, pathFill] = useMemo(() => {
-    if ((color as string) === "green") return ["#8affce", "#008F54"];
-    return ["#fff5ca", "#ffcf00"];
-  }, [color]);
+  const [circleFill, pathFill] = useFilledIconColor(color);
   return (
     <SvgIcon {...props} viewBox="0 0 22 22">
       <circle cx="11" cy="11" r="11" fill={circleFill} />
