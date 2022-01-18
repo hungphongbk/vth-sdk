@@ -43,7 +43,7 @@ const StyledToggleButton = styled(ToggleButton)<{ selectedColor: string }>(
 );
 
 type CommentRateSelectorProps = Omit<ToggleButtonGroupProps, "children">;
-export default function CommentRateSelector(
+export function CommentRateSelector(
   props: CommentRateSelectorProps
 ): JSX.Element {
   return (
