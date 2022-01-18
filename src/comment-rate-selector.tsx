@@ -49,7 +49,12 @@ export function CommentRateSelector(
   return (
     <StyledToggleButtonGroup {...props}>
       {Object.entries(CommentRateMaps).map(([_enum, { label, color }]) => (
-        <StyledToggleButton key={_enum} selectedColor={color} value={_enum}>
+        <StyledToggleButton
+          key={_enum}
+          selectedColor={color}
+          value={_enum}
+          aria-label={_enum}
+        >
           {label}
         </StyledToggleButton>
       ))}
