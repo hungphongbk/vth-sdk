@@ -1,3 +1,5 @@
+import { CommentRateEnum } from "./__graphql";
+
 export enum SettingKeys {
   Banner = "common:banner",
   SiteInfo = "common:siteInfo",
@@ -24,6 +26,18 @@ export const SubmitInvestorConstants = {
     "Trên 1 tỷ",
     "Trên 10 tỷ",
   ],
+};
+
+export const CommentRateMaps: Record<
+  CommentRateEnum,
+  { label: string; color: string }
+> = {
+  [CommentRateEnum.CoTiemNang]: { label: "Có tiềm năng", color: "#FF9900" },
+  [CommentRateEnum.DangTien]: { label: "Đáng tiền", color: "#FFD211" },
+  [CommentRateEnum.SieuPham]: { label: "Siêu phẩm", color: "#FF0000" },
+  [CommentRateEnum.Hay]: { label: "Ý tưởng hay", color: "#0FD07F" },
+  [CommentRateEnum.CungDuoc]: { label: "Ý tưởng cũng được", color: "#0085FF" },
+  [CommentRateEnum.XamXi]: { label: "Ý tưởng xàm xí", color: "#9643FF" },
 };
 
 export const Constants = { SettingKeys, SubmitInvestorConstants };
