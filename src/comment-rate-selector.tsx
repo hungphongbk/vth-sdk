@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import {
   css,
   styled,
@@ -42,12 +42,13 @@ const StyledToggleButton = styled(ToggleButton)<{ selectedColor: string }>(
   `
 );
 
-type CommentRateSelectorProps = Omit<ToggleButtonGroupProps, "children">;
-export function CommentRateSelector(
-  props: CommentRateSelectorProps
-): JSX.Element {
+export type CommentRateSelectorProps = Omit<ToggleButtonGroupProps, "children">;
+const CommentRateSelector = forwardRef<
+  HTMLDivElement,
+  CommentRateSelectorProps
+>(function CommentRateSelector(props, ref): JSX.Element {
   return (
-    <StyledToggleButtonGroup {...props}>
+    <StyledToggleButtonGroup ref={ref} {...props}>
       {Object.entries(CommentRateMaps).map(([_enum, { label, color }]) => (
         <StyledToggleButton
           key={_enum}
@@ -60,4 +61,6 @@ export function CommentRateSelector(
       ))}
     </StyledToggleButtonGroup>
   );
-}
+});
+
+export { CommentRateSelector };
