@@ -32,6 +32,10 @@ export default {
           dest: "dist/themeAugmentation",
         },
         {
+          src: "src/apollo/package.json",
+          dest: "dist/apollo",
+        },
+        {
           src: "index.js",
           dest: "dist/themeAugmentation",
         },
