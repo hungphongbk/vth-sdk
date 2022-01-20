@@ -1,6 +1,7 @@
 export * from "./__graphql"
 export * from "./apollo/utilities/pagination"
 export * from "./AspectRatio"
+export * from "./assets/AlertPrimaryIcon"
 export * from "./assets/CheckFilledPrimaryIcon"
 export * from "./assets/ComingSoonIcon"
 export * from "./assets/IdeaBulbIcon"
