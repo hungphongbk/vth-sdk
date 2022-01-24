@@ -1,4 +1,9 @@
-import React, { EventHandler, SyntheticEvent, useState } from "react";
+import React, {
+  EventHandler,
+  SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 import { AspectRatio } from "./AspectRatio";
 import {
   sxFlexCenter,
@@ -100,33 +105,39 @@ export function HighlightFeature(inProps: HighlightFeatureProps): JSX.Element {
     { control, handleSubmit, formState } = form,
     isUpdate = typeof value !== "undefined" && !/^draft/.test(value.id);
 
-  const submitUpdate = async (formValues: any) => {
-    const payload: any = diff(value, formValues);
-    payload.id = value.id;
+  const submitUpdate = useCallback(
+    async (formValues: any) => {
+      const payload: any = diff(value, formValues);
+      payload.id = value.id;
 
-    await onUpdate!(payload);
-  };
-  const handleChange = async (values: any, event: any) => {
-    if (onChange) {
-      const nativeEvent = event.nativeEvent || event;
-      // @ts-ignore
-      const clonedEvent = new nativeEvent.constructor(
-        nativeEvent.type,
-        nativeEvent
-      );
+      await onUpdate!(payload);
+    },
+    [onUpdate, value]
+  );
+  const handleChange = useCallback(
+    async (values: any, event: any) => {
+      if (onChange) {
+        const nativeEvent = event.nativeEvent || event;
+        // @ts-ignore
+        const clonedEvent = new nativeEvent.constructor(
+          nativeEvent.type,
+          nativeEvent
+        );
 
-      Object.defineProperty(clonedEvent, "target", {
-        writable: true,
-        value: {
-          value: values,
-          name,
-        },
-      });
-      if (isUpdate) await submitUpdate(values);
-      onChange(clonedEvent);
-      setOpen(false);
-    }
-  };
+        Object.defineProperty(clonedEvent, "target", {
+          writable: true,
+          value: {
+            value: values,
+            name,
+          },
+        });
+        if (isUpdate) await submitUpdate(values);
+        onChange(clonedEvent);
+        setOpen(false);
+      }
+    },
+    [isUpdate, name, onChange, submitUpdate]
+  );
 
   const classes = useUtilityClasses(props);
 
