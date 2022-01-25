@@ -15,6 +15,11 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
   --checkbox-focus-color: hsl(207deg 100% 69%);
   --checkbox-disabled-border-color: #ccc;
   --checkbox-disabled-background-color: #ddd;
+  ${(props) =>
+    props.error &&
+    css`
+      --color: #d32f2f;
+    `}
 
   table {
     border-collapse: collapse;
@@ -23,14 +28,9 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
 
   td,
   th {
-    border: 1px solid #ddd;
+    border: 1px solid var(--color);
     text-align: left;
     padding: ${GUTTER}px;
-    ${(props) =>
-      props.error &&
-      css`
-        border-color: #d32f2f;
-      `}
   }
 
   th {
@@ -45,7 +45,7 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
     css`
       overflow: hidden;
       border-radius: 12px;
-      border: 1px solid #ddd;
+      border: 1px solid var(--color);
       > table {
         margin: -1px;
         width: calc(100% + 2px);
