@@ -1,5 +1,5 @@
-import { Autocomplete, Checkbox, TextField } from "@mui/material";
-import React, { ElementType, SyntheticEvent } from "react";
+import { TextField } from "@mui/material";
+import React, { ElementType } from "react";
 import { Controller, UseControllerProps } from "react-hook-form";
 import {
   BaseProps,
@@ -32,7 +32,7 @@ interface FormInputTypeMap<
   props: P &
     Pick<
       UseControllerProps<TFieldValues, TName>,
-      "name" | "defaultValue" | "control"
+      "name" | "defaultValue" | "control" | "rules"
     > & {
       allowUndefined?: boolean;
     };
@@ -68,6 +68,7 @@ function FormInput<
   defaultValue,
   component,
   allowUndefined,
+  rules = undefined,
   ...rest
 }: GenericFormInputProps<C, TFieldValues>): JSX.Element {
   const Component = component ?? TextField;
@@ -81,60 +82,12 @@ function FormInput<
       onChange: (e: any) => onChange(transformNumberChange(e)),
     };
   };
-  const processCheckbox: FieldProcessCb = (fields, _) => {
-    if (Component !== Checkbox) return fields;
-    const { value, onChange, ...others } = fields;
-    return {
-      ...others,
-      checked: value,
-      onChange: (e: any) => onChange(e.target.checked),
-    };
-  };
-  const processAutocomplete: FieldProcessCb = (fields, fieldStates) => {
-    // @ts-ignore
-    if (Component !== Autocomplete) return fields;
-    const { onChange, ...others } = fields;
-    return {
-      ...others,
-      onChange: (event: SyntheticEvent, value: any) => {
-        const nativeEvent = event.nativeEvent || event;
-        // @ts-ignore
-        const clonedEvent = new nativeEvent.constructor(
-          nativeEvent.type,
-          nativeEvent
-        );
-
-        Object.defineProperty(clonedEvent, "target", {
-          writable: true,
-          value: { value, name },
-        });
-        onChange(clonedEvent, value);
-      },
-      renderInput: (inputProps: any) =>
-        // @ts-ignore
-        rest.renderInput?.({
-          ...inputProps,
-          error: fieldStates.error,
-          helperText: fieldStates.error?.message,
-        }),
-    };
-  };
-  const processPassesFields = [
-    processInputNumber,
-    processCheckbox,
-    processAutocomplete,
-  ].reduce<FieldProcessCb>(
-    (acc, val) => (fields, fieldStates) => ({
-      ...acc(fields, fieldStates),
-      ...val(fields, fieldStates),
-    }),
-    (fields, _) => fields
-  );
 
   return (
     <Controller
       name={name}
       control={control}
+      rules={rules}
       defaultValue={
         (typeof defaultValue !== "undefined" || allowUndefined === true
           ? defaultValue
