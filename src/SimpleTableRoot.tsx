@@ -47,7 +47,7 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true }>`
       }
     `}
 `;
-SimpleTableRoot.TextEditor = styled("input")`
+SimpleTableRoot.TextEditor = styled("input")<{ error?: boolean }>`
   appearance: none;
   box-sizing: border-box;
   width: calc(100% + ${GUTTER * 2}px);
@@ -60,6 +60,13 @@ SimpleTableRoot.TextEditor = styled("input")`
   font-family: inherit;
   font-size: var(--font-size);
   border: none;
+  display: block;
+  ${(props) =>
+    props.error &&
+    css`
+      background-color: #ffbcbc;
+      color: #d32f2f;
+    `}
   &:focus {
     outline: none;
   }
