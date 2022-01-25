@@ -2,7 +2,7 @@ import { Box, css, styled } from "@mui/material";
 
 const GUTTER = 8;
 
-export const SimpleTableRoot = styled(Box)<{ rounded?: true }>`
+export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
   --color: #000;
   --border-color: #ddd;
   --summary-border-color: #aaa;
@@ -26,6 +26,11 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true }>`
     border: 1px solid #ddd;
     text-align: left;
     padding: ${GUTTER}px;
+    ${(props) =>
+      props.error &&
+      css`
+        border-color: #d32f2f;
+      `}
   }
 
   th {
@@ -61,12 +66,6 @@ SimpleTableRoot.TextEditor = styled("input")<{ error?: boolean }>`
   font-size: var(--font-size);
   border: none;
   display: block;
-  ${(props) =>
-    props.error &&
-    css`
-      background-color: #ffbcbc;
-      color: #d32f2f;
-    `}
   &:focus {
     outline: none;
   }
