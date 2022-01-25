@@ -24,6 +24,7 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
   table {
     border-collapse: collapse;
     width: 100%;
+    color: var(--color);
   }
 
   td,
