@@ -18,7 +18,8 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
   ${(props) =>
     props.error &&
     css`
-      --color: #d32f2f;
+      --color: ${props.theme.palette.error.main};
+      --border-color: ${props.theme.palette.error.main};
     `}
 
   table {
@@ -29,7 +30,7 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
 
   td,
   th {
-    border: 1px solid var(--color);
+    border: 1px solid var(--border-color);
     text-align: left;
     padding: ${GUTTER}px;
   }
@@ -46,7 +47,7 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
     css`
       overflow: hidden;
       border-radius: 12px;
-      border: 1px solid var(--color);
+      border: 1px solid var(--border-color);
       > table {
         margin: -1px;
         width: calc(100% + 2px);
