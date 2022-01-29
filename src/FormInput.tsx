@@ -99,7 +99,7 @@ function FormInput<
           // defaultValue={defaultValue}
           {...processInputNumber(field, fieldState)}
           error={!!fieldState.error}
-          helperText={fieldState.error?.message}
+          helperText={fieldState.error?.message ?? rest.helperText ?? undefined}
         />
       )}
     />
