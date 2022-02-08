@@ -1,11 +1,10 @@
 import React, { forwardRef } from "react";
 import {
-  css,
-  styled,
   ToggleButton,
   ToggleButtonGroup,
   ToggleButtonGroupProps,
 } from "@mui/material";
+import { css, styled } from "@mui/material/styles";
 import { CommentRateMaps } from "./constants";
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(

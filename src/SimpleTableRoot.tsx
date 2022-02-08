@@ -1,4 +1,5 @@
-import { Box, css, styled } from "@mui/material";
+import { Box } from "@mui/material";
+import { css, styled } from "@mui/material/styles";
 
 const GUTTER = 8;
 
