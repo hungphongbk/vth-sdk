@@ -2,7 +2,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import pkg from "./package.json";
 import typescript from "rollup-plugin-typescript2";
-import commonjs from "@rollup/plugin-commonjs";
 import copy from "rollup-plugin-copy";
 
 // Excluded dependencies
@@ -14,7 +13,7 @@ export default {
     dir: "dist",
     sourcemap: true,
     globals: { react: "React" },
-    format: "cjs",
+    format: "esm",
     exports: "named",
     preserveModules: true,
     preserveModulesRoot: "src",
@@ -23,7 +22,7 @@ export default {
     peerDepsExternal(),
     resolve(),
     typescript(),
-    commonjs(),
+    // commonjs(),
     copy({
       targets: [
         { src: ".npmrc", dest: "dist" },
