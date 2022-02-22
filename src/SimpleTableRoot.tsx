@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { css, styled } from "@mui/material/styles";
-import React from "react";
+import React, { ForwardedRef, forwardRef } from "react";
 import InputUnstyled, { InputUnstyledProps } from "@mui/base/InputUnstyled";
 
 const GUTTER = 8;
@@ -80,14 +80,25 @@ const TextEditorBase = styled("input")<{ error?: boolean }>`
     opacity: 1;
   }
 `;
+const Root = styled("div")`
+  display: flex;
+  align-items: center;
+  ${TextEditorBase} {
+    flex: 1;
+  }
+`;
 
-const TextEditor = function TextEditor(props: InputUnstyledProps) {
+const TextEditor = forwardRef(function TextEditor(
+  props: InputUnstyledProps,
+  ref: ForwardedRef<HTMLDivElement>
+) {
   return (
     <InputUnstyled
-      components={{ Root: "div", Input: TextEditorBase }}
+      components={{ Root, Input: TextEditorBase }}
       {...props}
+      ref={ref}
     />
   );
-};
+});
 
 SimpleTableRoot.TextEditor = TextEditor;
