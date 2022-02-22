@@ -4,7 +4,7 @@ import pkg from "./package.json";
 import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
 import { getBabelOutputPlugin } from "@rollup/plugin-babel";
-
+import commonjs from "@rollup/plugin-commonjs";
 // Excluded dependencies
 const EXTERNAL = Object.keys(pkg.devDependencies);
 
@@ -23,7 +23,9 @@ export default {
     peerDepsExternal(),
     resolve(),
     typescript(),
-    // commonjs(),
+    commonjs({
+      include: /node_modules/,
+    }),
     getBabelOutputPlugin({
       presets: ["@babel/preset-env"],
       plugins: [

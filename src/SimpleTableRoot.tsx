@@ -1,5 +1,7 @@
 import { Box } from "@mui/material";
 import { css, styled } from "@mui/material/styles";
+import React from "react";
+import InputUnstyled, { InputUnstyledProps } from "@mui/base/InputUnstyled";
 
 const GUTTER = 8;
 
@@ -55,7 +57,8 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
       }
     `}
 `;
-SimpleTableRoot.TextEditor = styled("input")<{ error?: boolean }>`
+
+const TextEditorBase = styled("input")<{ error?: boolean }>`
   appearance: none;
   box-sizing: border-box;
   width: calc(100% + ${GUTTER * 2}px);
@@ -77,3 +80,14 @@ SimpleTableRoot.TextEditor = styled("input")<{ error?: boolean }>`
     opacity: 1;
   }
 `;
+
+const TextEditor = function TextEditor(props: InputUnstyledProps) {
+  return (
+    <InputUnstyled
+      components={{ Root: "div", Input: TextEditorBase }}
+      {...props}
+    />
+  );
+};
+
+SimpleTableRoot.TextEditor = TextEditor;

@@ -18,6 +18,17 @@ const table = (
         <td>Cell 1</td>
         <td>Cell 2</td>
       </tr>
+      <tr>
+        <td>
+          <SimpleTableRoot.TextEditor value={"text 1"} />
+        </td>
+        <td>
+          <SimpleTableRoot.TextEditor
+            value={"text 2"}
+            // endAdornment={<InputAdornment position={"end"}>%</InputAdornment>}
+          />
+        </td>
+      </tr>
     </tbody>
   </table>
 );

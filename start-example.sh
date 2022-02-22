@@ -10,5 +10,5 @@ if [[ $linkLibs == "link" ]]; then
   done
 fi
 cd example
-npm link react @mui/material @mui/icons-material react-hook-form lodash @hungphongbk/vth-sdk
+npm link react react-dom @mui/material @mui/icons-material react-hook-form lodash @hungphongbk/vth-sdk
 npm run dev
