@@ -163,7 +163,7 @@ export function SvgImageUploader(inProps: SvgImageUploaderProps): JSX.Element {
             "& img": { ...sxFullSize, objectFit: "cover" },
           }}
         >
-          <img src={`data:image/svg+xml;base64,${value}`} alt="svg preview" />
+          <img src={value} alt="svg preview" />
           <SvgImageUploaderDeleteButton
             size={"small"}
             sx={{
