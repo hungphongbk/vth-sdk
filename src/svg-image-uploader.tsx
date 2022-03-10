@@ -16,6 +16,7 @@ import { sxFlexCenter, sxFullSize } from "./utils/predefinedSx";
 import { uniqueId } from "lodash";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { UploadEventHandler } from "./image-uploader";
+import { SxProps } from "@mui/system";
 
 export interface SvgImageUploaderClasses {
   root: string;
@@ -35,6 +36,7 @@ export type SvgImageUploaderProps = PropsWithChildren<
   Pick<AspectRatioProps, "ratio"> & {
     className?: string;
     classes?: Partial<SvgImageUploaderClasses>;
+    sx?: SxProps;
     name?: string | undefined;
     value?: string;
     onChange?: UploadEventHandler;
@@ -91,7 +93,15 @@ export function SvgImageUploader(inProps: SvgImageUploaderProps): JSX.Element {
       props: inProps,
       name: SVG_IMAGE_UPLOADER,
     }),
-    { name, value, onChange, children, ratio = undefined, onDelete } = props;
+    {
+      name,
+      value,
+      onChange,
+      children,
+      ratio = undefined,
+      onDelete,
+      sx,
+    } = props;
   const emitChange = (event: ChangeEvent<HTMLInputElement>, value: any) => {
     if (onChange) {
       const nativeEvent = event.nativeEvent || event;
@@ -145,7 +155,7 @@ export function SvgImageUploader(inProps: SvgImageUploaderProps): JSX.Element {
   const classes = useUtilityClasses(props);
 
   return (
-    <SvgImageUploaderThumbnail className={classes.root} ratio={ratio}>
+    <SvgImageUploaderThumbnail className={classes.root} ratio={ratio} sx={sx}>
       {!value ? (
         <StyledLabel htmlFor={id}>
           <UploadInput
