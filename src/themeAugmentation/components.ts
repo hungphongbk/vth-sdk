@@ -20,6 +20,11 @@ export interface VthComponents {
     styleOverrides?: ComponentsOverrides["ImageListEditor"];
     variants?: ComponentsVariants["ImageListEditor"];
   };
+  SvgImageUploader?: {
+    defaultProps: ComponentsProps["SvgImageUploader"];
+    styleOverrides?: ComponentsOverrides["SvgImageUploader"];
+    variants?: ComponentsVariants["SvgImageUploader"];
+  };
 }
 
 declare module "@mui/material/styles" {

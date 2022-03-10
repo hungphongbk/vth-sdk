@@ -44,3 +44,4 @@ export const Constants = { SettingKeys, SubmitInvestorConstants };
 
 export const IMAGE_LIST_EDITOR = "ImageListEditor";
 export const IMAGE_UPLOADER = "ImageUploader";
+export const SVG_IMAGE_UPLOADER = "SvgImageUploader";

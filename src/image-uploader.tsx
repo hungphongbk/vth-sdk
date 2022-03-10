@@ -119,10 +119,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
     services: { uploadService },
   } = useVthTheme();
 
-  const emitChange = async (
-    event: ChangeEvent<HTMLInputElement>,
-    value: any
-  ) => {
+  const emitChange = (event: ChangeEvent<HTMLInputElement>, value: any) => {
     if (onChange) {
       const nativeEvent = event.nativeEvent || event;
       // @ts-ignore
@@ -165,7 +162,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   const handleRemove = async (event: any) => {
     if (onDelete) {
       await onDelete(value!);
-    } else await emitChange(event, undefined);
+    } else emitChange(event, undefined);
   };
 
   const classes = useUtilityClasses(props);
