@@ -48,7 +48,7 @@ export function ListEditor({
       if (value && options.onDelete) {
         const rs = await options.onDelete(value);
         if (!rs) remove(index);
-      }
+      } else remove(index);
     },
     [options, remove]
   );
