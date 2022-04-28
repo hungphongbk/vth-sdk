@@ -219,7 +219,10 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
             <img src={value.path ?? ""} alt="preview" />
           ) : (
             <Box className={"yt-preview"}>
-              <YouTube videoId={value.path} height={480} width={640} />
+              <YouTube
+                videoId={value.path}
+                opts={{ height: 480, width: 640 }}
+              />
             </Box>
           )}
           <ImageUploaderDeleteButton
