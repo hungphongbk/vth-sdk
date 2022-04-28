@@ -111,7 +111,7 @@
     "graphql-codegen": "NODE_ENV=development graphql-codegen -r dotenv-flow/config"
   },
   "types": "./index.d.ts",
-  "version": "1.0.6-154",
+  "version": "1.0.6-155",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
