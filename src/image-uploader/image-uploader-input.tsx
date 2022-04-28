@@ -1,16 +1,18 @@
-import React, { ChangeEventHandler } from "react";
+import React, { ChangeEventHandler, useMemo } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Box,
   CircularProgress,
   Fade,
+  IconButton,
   Paper,
   Popper,
-  Typography,
+  Stack,
 } from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
 import { ImageUploaderProps, MediaBase } from "./image-uploader";
 import PopupState, { bindPopper, bindToggle } from "material-ui-popup-state";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 const StyledLabel = styled("label")`
   width: 100%;
@@ -35,16 +37,23 @@ export default function ImageUploaderInput({
   handleChange,
   allowYoutube = false,
 }: ImageUploaderInputProps): JSX.Element {
+  const $uploadImageInput = useMemo(
+    () => (
+      <UploadInput
+        accept={"image/*"}
+        id={id}
+        type={"file"}
+        onChange={handleChange}
+      />
+    ),
+    [id, handleChange]
+  );
+
   if (!allowYoutube)
     return (
       <>
         <StyledLabel htmlFor={id}>
-          <UploadInput
-            accept={"image/*"}
-            id={id}
-            type={"file"}
-            onChange={handleChange}
-          />
+          {$uploadImageInput}
           <Box sx={[sxFullSize, sxFlexCenter]}>
             {uploading ? <CircularProgress /> : children}
           </Box>
@@ -53,10 +62,10 @@ export default function ImageUploaderInput({
     );
 
   return (
-    <PopupState variant="popper" popupId="demo-popup-popper">
+    <PopupState variant="popper" popupId={`popup-${id}`}>
       {(popupState) => (
         <>
-          <StyledLabel htmlFor={id} {...bindToggle(popupState)}>
+          <StyledLabel {...bindToggle(popupState)}>
             <Box sx={[sxFullSize, sxFlexCenter]}>
               {uploading ? <CircularProgress /> : children}
             </Box>
@@ -64,10 +73,13 @@ export default function ImageUploaderInput({
           <Popper {...bindPopper(popupState)} transition>
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
-                <Paper>
-                  <Typography sx={{ p: 2 }}>
-                    The content of the Popper.
-                  </Typography>
+                <Paper sx={{ p: 1 }}>
+                  <Stack direction="row" spacing={1}>
+                    <IconButton component={"label"} htmlFor={id}>
+                      <AddPhotoAlternateIcon />
+                      {$uploadImageInput}
+                    </IconButton>
+                  </Stack>
                 </Paper>
               </Fade>
             )}
