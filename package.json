@@ -5,14 +5,15 @@
   },
   "peerDependencies": {
     "@apollo/client": "^3.5.5",
-    "@mui/icons-material": "^5.4.2",
-    "@mui/lab": "^5.0.0-alpha.70",
-    "@mui/material": "^5.3.1",
-    "@mui/base": "^5.3.1",
+    "@mui/base": "^5.0.0-alpha.78",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/lab": "^5.0.0-alpha.79",
+    "@mui/material": "^5.6.3",
     "date-fns": "^2.28.0",
     "deep-object-diff": "^1.1.0",
     "deepmerge": "^4.2.2",
     "lodash": "^4.17.21",
+    "material-ui-popup-state": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.20.0"
@@ -27,9 +28,10 @@
     "@graphql-codegen/typescript": "1.23.0",
     "@graphql-codegen/typescript-operations": "^2.2.0",
     "@graphql-codegen/typescript-react-apollo": "^3.2.2",
-    "@mui/icons-material": "^5.4.2",
-    "@mui/lab": "^5.0.0-alpha.70",
-    "@mui/material": "^5.4.3",
+    "@mui/base": "^5.0.0-alpha.78",
+    "@mui/icons-material": "^5.6.2",
+    "@mui/lab": "^5.0.0-alpha.79",
+    "@mui/material": "^5.6.3",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.2",
@@ -58,6 +60,7 @@
     "husky": "^7.0.0",
     "jest": "^27.0.6",
     "lint-staged": "^12.1.2",
+    "material-ui-popup-state": "^2.0.0",
     "prettier": "^2.5.0",
     "react": "^17.0.2",
     "react-app-rewired": "^2.1.8",
@@ -109,7 +112,6 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
-    "@mui/base": "^5.0.0-alpha.69",
     "deep-object-diff": "^1.1.0"
   },
   "sideEffects": false

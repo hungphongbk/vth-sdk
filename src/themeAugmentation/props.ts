@@ -1,5 +1,5 @@
 import { HighlightFeatureProps } from "../highlight-feature";
-import { ImageUploaderProps } from "../image-uploader";
+import { ImageUploaderProps } from "../image-uploader/image-uploader";
 import { ImageListEditorPropsInner } from "../image-list-editor";
 import { SvgImageUploaderProps } from "../svg-image-uploader";
 

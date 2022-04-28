@@ -3,13 +3,13 @@ import React, {
   EventHandler,
   PropsWithChildren,
   SyntheticEvent,
+  useCallback,
   useState,
 } from "react";
 import { styled } from "@mui/material/styles";
 import { uniqueId } from "lodash";
 import {
   Box,
-  CircularProgress,
   css,
   generateUtilityClass,
   generateUtilityClasses,
@@ -18,25 +18,18 @@ import {
   unstable_composeClasses,
   useThemeProps,
 } from "@mui/material";
-import { sxFlexCenter, sxFullSize } from "./utils/predefinedSx";
+import { sxFullSize } from "../utils/predefinedSx";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { AspectRatio, AspectRatioProps } from "./AspectRatio";
-import { useVthTheme } from "./VthThemeProvider";
-import { IMAGE_UPLOADER } from "./constants";
+import { AspectRatio, AspectRatioProps } from "../AspectRatio";
+import { useVthTheme } from "../VthThemeProvider";
+import { IMAGE_UPLOADER } from "../constants";
+import ImageUploaderInput from "./image-uploader-input";
 
 export interface ImageUploaderClasses {
   root: string;
   deleteButton: string;
 }
 export type ImageUploaderClassKey = keyof ImageUploaderClasses;
-
-const StyledLabel = styled("label")`
-  width: 100%;
-  height: 100%;
-`;
-const UploadInput = styled("input")`
-  display: none;
-`;
 
 export interface UploadEvent<T = Element> extends SyntheticEvent<T> {
   target: EventTarget &
@@ -65,6 +58,7 @@ export type ImageUploaderProps<T extends MediaBase = MediaBase> =
       onChange?: UploadEventHandler;
       required?: boolean;
       onDelete?: (value: T) => void | Promise<void>;
+      allowYoutube?: boolean;
     }
   >;
 
@@ -113,51 +107,65 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
       props: inProps,
       name: IMAGE_UPLOADER,
     }),
-    { name, value, onChange, children, ratio = undefined, onDelete } = props;
+    {
+      name,
+      value,
+      onChange,
+      children,
+      ratio = undefined,
+      allowYoutube = false,
+      onDelete,
+    } = props;
 
   const {
     services: { uploadService },
   } = useVthTheme();
 
-  const emitChange = (event: ChangeEvent<HTMLInputElement>, value: any) => {
-    if (onChange) {
-      const nativeEvent = event.nativeEvent || event;
-      // @ts-ignore
-      const clonedEvent = new nativeEvent.constructor(
-        nativeEvent.type,
-        nativeEvent
-      );
+  const emitChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>, value: any) => {
+      if (onChange) {
+        const nativeEvent = event.nativeEvent || event;
+        // @ts-ignore
+        const clonedEvent = new nativeEvent.constructor(
+          nativeEvent.type,
+          nativeEvent
+        );
 
-      Object.defineProperty(clonedEvent, "target", {
-        writable: true,
-        value: {
-          value,
-          name,
-        },
+        Object.defineProperty(clonedEvent, "target", {
+          writable: true,
+          value: {
+            value,
+            name,
+          },
+        });
+        onChange(clonedEvent);
+      }
+    },
+    [name, onChange]
+  );
+  const handleChange = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      setUploading(true);
+      const file = event.target.files![0]!,
+        mimetype = file.type,
+        filename = file.name,
+        response = await uploadService(file);
+
+      await emitChange(event, {
+        ...(value ?? {}),
+        // @ts-ignore
+        ...(value?.cid ? { id: value.cid } : {}),
+        mimetype,
+        filename,
+        path: response.path,
+        preloadUrl: response.preload,
+        width: response.width,
+        height: response.height,
       });
-      onChange(clonedEvent);
-    }
-  };
-  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
-    setUploading(true);
-    const file = event.target.files![0]!,
-      mimetype = file.type,
-      filename = file.name,
-      response = await uploadService(file);
-
-    await emitChange(event, {
-      ...(value ?? {}),
-      // @ts-ignore
-      ...(value?.cid ? { id: value.cid } : {}),
-      mimetype,
-      filename,
-      path: response.path,
-      preloadUrl: response.preload,
-      width: response.width,
-      height: response.height,
-    });
-    setUploading(false);
-  };
+      setUploading(false);
+    },
+    [emitChange, uploadService, value]
+  );
 
   const handleRemove = async (event: any) => {
     if (onDelete) {
@@ -170,17 +178,14 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   return (
     <ImageUploaderThumbnail className={classes.root} ratio={ratio}>
       {!value || !value.path ? (
-        <StyledLabel htmlFor={id}>
-          <UploadInput
-            accept={"image/*"}
-            id={id}
-            type={"file"}
-            onChange={handleChange}
-          />
-          <Box sx={[sxFullSize, sxFlexCenter]}>
-            {uploading ? <CircularProgress /> : children}
-          </Box>
-        </StyledLabel>
+        <ImageUploaderInput
+          id={id}
+          uploading={uploading}
+          handleChange={handleChange}
+          allowYoutube={allowYoutube}
+        >
+          {children}
+        </ImageUploaderInput>
       ) : (
         <Box
           sx={{

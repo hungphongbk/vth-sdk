@@ -1,5 +1,5 @@
 import { HighlightFeatureClassKey } from "../highlight-feature";
-import { ImageUploaderClassKey } from "../image-uploader";
+import { ImageUploaderClassKey } from "../image-uploader/image-uploader";
 import { ImageListEditorClassKey } from "../image-list-editor";
 import { SvgImageUploaderClassKey } from "../svg-image-uploader";
 
