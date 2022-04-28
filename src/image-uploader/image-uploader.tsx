@@ -39,6 +39,10 @@ export interface UploadEvent<T = Element> extends SyntheticEvent<T> {
 }
 export type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
 
+export enum MediaFormatType {
+  IMAGE,
+  YOUTUBE,
+}
 export interface MediaBase {
   mimetype: string;
   path: string;
@@ -46,6 +50,7 @@ export interface MediaBase {
   preloadUrl: string;
   width: number;
   height: number;
+  formatType: MediaFormatType;
 }
 
 export type ImageUploaderProps<T extends MediaBase = MediaBase> =

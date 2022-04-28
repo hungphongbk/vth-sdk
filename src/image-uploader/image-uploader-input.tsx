@@ -90,7 +90,11 @@ export default function ImageUploaderInput({
                       </IconButton>
                     </Stack>
                   ) : (
-                    <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      className={"items-center mt-1"}
+                    >
                       <IconButton onClick={() => setIsYtMode(false)}>
                         <ArrowBackIcon />
                       </IconButton>
