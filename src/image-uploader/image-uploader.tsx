@@ -18,7 +18,6 @@ import {
   unstable_composeClasses,
   useThemeProps,
 } from "@mui/material";
-import { sxFullSize } from "../utils/predefinedSx";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { AspectRatio, AspectRatioProps } from "../AspectRatio";
 import { useVthTheme } from "../VthThemeProvider";
@@ -211,19 +210,20 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
         <Box
           sx={{
             position: "relative",
-            "& img": { ...sxFullSize, objectFit: "cover" },
-            "& .yt-preview": { ...sxFullSize, objectFit: "cover" },
           }}
         >
           {value.formatType === MediaFormatType.IMAGE ? (
-            <img src={value.path ?? ""} alt="preview" />
+            <img
+              className="h-full w-full object-cover"
+              src={value.path ?? ""}
+              alt="preview"
+            />
           ) : (
-            <Box className={"yt-preview"}>
-              <YouTube
-                videoId={value.path}
-                opts={{ height: 480, width: 640 }}
-              />
-            </Box>
+            <YouTube
+              className="h-full w-full object-cover"
+              videoId={value.path}
+              opts={{ height: "100%", width: "100%" }}
+            />
           )}
           <ImageUploaderDeleteButton
             size={"small"}
