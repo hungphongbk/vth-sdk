@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useMemo } from "react";
+import React, { ChangeEventHandler, useMemo, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Box,
@@ -8,11 +8,15 @@ import {
   Paper,
   Popper,
   Stack,
+  TextField,
 } from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
 import { ImageUploaderProps, MediaBase } from "./image-uploader";
 import PopupState, { bindPopper, bindToggle } from "material-ui-popup-state";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CheckIcon from "@mui/icons-material/Check";
 
 const StyledLabel = styled("label")`
   width: 100%;
@@ -48,6 +52,7 @@ export default function ImageUploaderInput({
     ),
     [id, handleChange]
   );
+  const [isYtMode, setIsYtMode] = useState(false);
 
   if (!allowYoutube)
     return (
@@ -74,12 +79,30 @@ export default function ImageUploaderInput({
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
                 <Paper sx={{ p: 1 }}>
-                  <Stack direction="row" spacing={1}>
-                    <IconButton component={"label"} htmlFor={id}>
-                      <AddPhotoAlternateIcon />
-                      {$uploadImageInput}
-                    </IconButton>
-                  </Stack>
+                  {!isYtMode ? (
+                    <Stack direction="row" spacing={1}>
+                      <IconButton component={"label"} htmlFor={id}>
+                        <AddPhotoAlternateIcon />
+                        {$uploadImageInput}
+                      </IconButton>
+                      <IconButton onClick={() => setIsYtMode(true)}>
+                        <YouTubeIcon />
+                      </IconButton>
+                    </Stack>
+                  ) : (
+                    <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
+                      <IconButton onClick={() => setIsYtMode(false)}>
+                        <ArrowBackIcon />
+                      </IconButton>
+                      <TextField
+                        sx={{ width: "200px" }}
+                        label={"Chèn youtube URL vào đây"}
+                      />
+                      <IconButton color={"success"}>
+                        <CheckIcon />
+                      </IconButton>
+                    </Stack>
+                  )}
                 </Paper>
               </Fade>
             )}
