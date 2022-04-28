@@ -1,3 +1,5 @@
+import "./tailwind.css";
+
 export * from "./__graphql";
 export * from "./apollo/utilities/pagination";
 export * from "./AspectRatio";
