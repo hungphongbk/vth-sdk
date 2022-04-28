@@ -24,6 +24,7 @@ import { AspectRatio, AspectRatioProps } from "../AspectRatio";
 import { useVthTheme } from "../VthThemeProvider";
 import { IMAGE_UPLOADER } from "../constants";
 import ImageUploaderInput from "./image-uploader-input";
+import YouTube from "react-youtube";
 
 export interface ImageUploaderClasses {
   root: string;
@@ -151,25 +152,37 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   const handleChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       setUploading(true);
-      if (event.target.value && (event.target.value as any).url) {
-        debugger;
-      }
-      const file = event.target.files![0]!,
-        mimetype = file.type,
-        filename = file.name,
-        response = await uploadService(file);
+      if ((event.target.value?.length ?? 0) > 0) {
+        await emitChange(event, {
+          // @ts-ignore
+          ...(value?.cid ? { id: value.cid } : {}),
+          mimetype: "",
+          filename: event.target.value,
+          path: event.target.value,
+          preloadUrl: "",
+          width: 640,
+          height: 480,
+          formatType: MediaFormatType.YOUTUBE,
+        });
+      } else {
+        const file = event.target.files![0]!,
+          mimetype = file.type,
+          filename = file.name,
+          response = await uploadService(file);
 
-      await emitChange(event, {
-        ...(value ?? {}),
-        // @ts-ignore
-        ...(value?.cid ? { id: value.cid } : {}),
-        mimetype,
-        filename,
-        path: response.path,
-        preloadUrl: response.preload,
-        width: response.width,
-        height: response.height,
-      });
+        await emitChange(event, {
+          ...(value ?? {}),
+          // @ts-ignore
+          ...(value?.cid ? { id: value.cid } : {}),
+          mimetype,
+          filename,
+          path: response.path,
+          preloadUrl: response.preload,
+          width: response.width,
+          height: response.height,
+          formatType: MediaFormatType.IMAGE,
+        });
+      }
       setUploading(false);
     },
     [emitChange, uploadService, value]
@@ -199,9 +212,16 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
           sx={{
             position: "relative",
             "& img": { ...sxFullSize, objectFit: "cover" },
+            "& .yt-preview": { ...sxFullSize, objectFit: "cover" },
           }}
         >
-          <img src={value.path ?? ""} alt="preview" />
+          {value.formatType === MediaFormatType.IMAGE ? (
+            <img src={value.path ?? ""} alt="preview" />
+          ) : (
+            <Box className={"yt-preview"}>
+              <YouTube videoId={value.path} height={480} width={640} />
+            </Box>
+          )}
           <ImageUploaderDeleteButton
             size={"small"}
             sx={{

@@ -31,6 +31,7 @@ const StyledLabel = styled("label")`
 const UploadInput = styled("input")`
   display: none;
 `;
+const YT_REGEXP = /^https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z\d]+)/;
 
 type ImageUploaderInputProps<T extends MediaBase = MediaBase> = Pick<
   ImageUploaderProps<T>,
@@ -79,7 +80,7 @@ export default function ImageUploaderInput({
       Object.defineProperty(clonedEvent, "target", {
         writable: true,
         value: {
-          value,
+          value: value.url.match(YT_REGEXP)![1],
         },
       });
 
@@ -137,7 +138,7 @@ export default function ImageUploaderInput({
                         sx={{ width: "300px" }}
                         label={"Chèn youtube URL vào đây"}
                         {...register("url", {
-                          pattern: /^https:\/\/www\.youtube\.com\/watch\?v=/,
+                          pattern: YT_REGEXP,
                         })}
                       />
                       <IconButton
