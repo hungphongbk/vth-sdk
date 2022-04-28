@@ -1,4 +1,9 @@
-import React, { ChangeEventHandler, useMemo, useState } from "react";
+import React, {
+  ChangeEventHandler,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
 import { styled } from "@mui/material/styles";
 import {
   Box,
@@ -17,6 +22,7 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CheckIcon from "@mui/icons-material/Check";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const StyledLabel = styled("label")`
   width: 100%;
@@ -34,6 +40,9 @@ type ImageUploaderInputProps<T extends MediaBase = MediaBase> = Pick<
   uploading: boolean;
   handleChange: ChangeEventHandler;
 };
+
+type YtForm = { url: string };
+
 export default function ImageUploaderInput({
   id,
   children,
@@ -53,6 +62,31 @@ export default function ImageUploaderInput({
     [id, handleChange]
   );
   const [isYtMode, setIsYtMode] = useState(false);
+  const { register, handleSubmit } = useForm<YtForm>({
+    defaultValues: { url: "" },
+  });
+
+  const handleYtChange = useCallback<SubmitHandler<YtForm>>(
+    (value, event) => {
+      const nativeEvent = event!.nativeEvent || event;
+      // @ts-ignore
+      const clonedEvent = new nativeEvent.constructor(
+        // @ts-ignore
+        nativeEvent.type,
+        nativeEvent
+      );
+
+      Object.defineProperty(clonedEvent, "target", {
+        writable: true,
+        value: {
+          value,
+        },
+      });
+
+      handleChange(clonedEvent);
+    },
+    [handleChange]
+  );
 
   if (!allowYoutube)
     return (
@@ -99,10 +133,17 @@ export default function ImageUploaderInput({
                         <ArrowBackIcon />
                       </IconButton>
                       <TextField
-                        sx={{ width: "200px" }}
+                        size={"small"}
+                        sx={{ width: "300px" }}
                         label={"Chèn youtube URL vào đây"}
+                        {...register("url", {
+                          pattern: /^https:\/\/www\.youtube\.com\/watch\?v=/,
+                        })}
                       />
-                      <IconButton color={"success"}>
+                      <IconButton
+                        color={"success"}
+                        onClick={handleSubmit(handleYtChange)}
+                      >
                         <CheckIcon />
                       </IconButton>
                     </Stack>

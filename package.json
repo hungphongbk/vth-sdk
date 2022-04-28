@@ -16,7 +16,10 @@
     "material-ui-popup-state": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.20.0"
+    "react-hook-form": "^7.20.0",
+    "@hookform/resolvers": "^2.8.8",
+    "@types/yup": "^0.29.13",
+    "yup": "^0.32.11"
   },
   "description": "Made for vaithuhay solutions",
   "devDependencies": {
@@ -116,7 +119,10 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "dependencies": {
-    "deep-object-diff": "^1.1.0"
+    "@hookform/resolvers": "^2.8.8",
+    "@types/yup": "^0.29.13",
+    "deep-object-diff": "^1.1.0",
+    "yup": "^0.32.11"
   },
   "sideEffects": false
 }

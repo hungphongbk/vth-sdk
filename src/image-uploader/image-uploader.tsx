@@ -151,6 +151,9 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   const handleChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       setUploading(true);
+      if (event.target.value && (event.target.value as any).url) {
+        debugger;
+      }
       const file = event.target.files![0]!,
         mimetype = file.type,
         filename = file.name,
