@@ -40,8 +40,8 @@ export interface UploadEvent<T = Element> extends SyntheticEvent<T> {
 export type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
 
 export enum MediaFormatType {
-  IMAGE = "IMAGE",
-  YOUTUBE = "YOUTUBE",
+  Image = "IMAGE",
+  Youtube = "YOUTUBE",
 }
 export interface MediaBase {
   mimetype: string;
@@ -161,7 +161,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
           preloadUrl: "",
           width: 640,
           height: 480,
-          formatType: MediaFormatType.YOUTUBE,
+          formatType: MediaFormatType.Youtube,
         });
       } else {
         const file = event.target.files![0]!,
@@ -179,7 +179,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
           preloadUrl: response.preload,
           width: response.width,
           height: response.height,
-          formatType: MediaFormatType.IMAGE,
+          formatType: MediaFormatType.Image,
         });
       }
       setUploading(false);
@@ -212,7 +212,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
             position: "relative",
           }}
         >
-          {value.formatType === MediaFormatType.IMAGE ? (
+          {value.formatType === MediaFormatType.Image ? (
             <img
               className="h-full w-full object-cover"
               src={value.path ?? ""}
