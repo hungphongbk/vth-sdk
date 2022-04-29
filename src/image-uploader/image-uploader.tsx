@@ -40,8 +40,8 @@ export interface UploadEvent<T = Element> extends SyntheticEvent<T> {
 export type UploadEventHandler<T = Element> = EventHandler<UploadEvent<T>>;
 
 export enum MediaFormatType {
-  IMAGE,
-  YOUTUBE,
+  IMAGE = "IMAGE",
+  YOUTUBE = "YOUTUBE",
 }
 export interface MediaBase {
   mimetype: string;
