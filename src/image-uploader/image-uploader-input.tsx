@@ -17,7 +17,10 @@ import {
 } from "@mui/material";
 import { sxFlexCenter, sxFullSize } from "../utils/predefinedSx";
 import { ImageUploaderProps, MediaBase } from "./image-uploader";
-import PopupState, { bindPopper, bindToggle } from "material-ui-popup-state";
+import PopupState, {
+  bindPopper,
+  bindToggle,
+} from "@hungphongbk/material-ui-popup-state";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
