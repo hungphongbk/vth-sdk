@@ -4,7 +4,7 @@
     "url": "https://github.com/hungphongbk/vth-sdk/issues"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.6.1",
+    "@apollo/client": "^3.5.0 || ^3.6.0",
     "@hookform/resolvers": "^2.8.8",
     "@hungphongbk/material-ui-popup-state": "^2.1.0",
     "@mui/base": "^5.0.0-alpha.78",
