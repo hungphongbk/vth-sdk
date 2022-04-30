@@ -6,6 +6,7 @@
   "peerDependencies": {
     "@apollo/client": "^3.6.1",
     "@hookform/resolvers": "^2.8.8",
+    "@hungphongbk/material-ui-popup-state": "^2.1.0",
     "@mui/base": "^5.0.0-alpha.78",
     "@mui/icons-material": "^5.6.2",
     "@mui/lab": "^5.0.0-alpha.79",
