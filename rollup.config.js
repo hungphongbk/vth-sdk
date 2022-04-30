@@ -5,7 +5,6 @@ import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
 import { getBabelOutputPlugin } from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
-import postcss from "rollup-plugin-postcss";
 
 // Excluded dependencies
 const EXTERNAL = Object.keys(pkg.devDependencies);
@@ -22,9 +21,6 @@ export default {
     preserveModulesRoot: "src",
   },
   plugins: [
-    postcss({
-      extract: true,
-    }),
     peerDepsExternal(),
     resolve(),
     typescript(),
