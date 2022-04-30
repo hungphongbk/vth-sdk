@@ -151,10 +151,7 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   const handleChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       setUploading(true);
-      if (
-        (event.target.files?.length ?? 0) === 0 ||
-        (event.target.value?.length ?? 0) > 0
-      ) {
+      if ((event.target.files?.length ?? 0) === 0) {
         await emitChange(event, {
           // @ts-ignore
           ...(value?.cid ? { id: value.cid } : {}),
