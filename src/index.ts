@@ -20,7 +20,7 @@ export * from "./highlight-feature";
 export * from "./image-list-editor";
 export * from "./image-uploader";
 export * from "./list-editor";
-export * from "./LoadingIndicator";
+export * from "./loading-indicator";
 export * from "./PromptDialog";
 export * from "./services/upload-service-generator";
 export * from "./SimpleTableRoot";

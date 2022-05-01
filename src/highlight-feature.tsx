@@ -150,18 +150,14 @@ export function HighlightFeature(inProps: HighlightFeatureProps): JSX.Element {
             ratio={"307/160"}
           >
             <Box
-              sx={[
-                sxFullSize,
-                sxFlexCenter,
-                {
-                  position: "relative",
-                  "& img": {
-                    ...sxFullSizeAbsolute,
-                    ...sxFullSize,
-                    objectFit: "cover",
-                  },
+              className="h-full w-full relative flex items-center justify-center"
+              sx={{
+                "& img": {
+                  ...sxFullSizeAbsolute,
+                  ...sxFullSize,
+                  objectFit: "cover",
                 },
-              ]}
+              }}
             >
               <img src={value.image.path} alt={`feature ${value.name}`} />
               <Button
