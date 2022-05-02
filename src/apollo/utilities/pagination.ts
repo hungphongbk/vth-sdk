@@ -1,10 +1,10 @@
-import { FieldPolicy, Reference } from "@apollo/client";
+import { FieldPolicy, Reference } from "@hungphongbk/apollo-client";
 import {
   RelayFieldPolicy,
   TExistingRelay,
   TRelayEdge,
   TRelayPageInfo,
-} from "@apollo/client/utilities/policies/pagination";
+} from "@hungphongbk/apollo-client/utilities/policies/pagination";
 import { __rest } from "tslib";
 import mergeDeep from "deepmerge";
 
