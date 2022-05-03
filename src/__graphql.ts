@@ -1,5 +1,5 @@
-import * as Apollo from "@hungphongbk/apollo-client";
-import { gql } from "@hungphongbk/apollo-client";
+import * as Apollo from "@apollo/client";
+import { gql } from "@apollo/client";
 
 export type Maybe<T> = T | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {

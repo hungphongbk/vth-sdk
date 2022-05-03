@@ -12,7 +12,7 @@ import { Control, useController, useWatch } from "react-hook-form";
 import { ImageUploader, ImageUploaderProps } from "./image-uploader";
 import { MutationHooks, RefetchQueryHooks } from "./types";
 import { omit } from "lodash";
-import { MutationHookOptions } from "@hungphongbk/apollo-client/react/types/types";
+import { MutationHookOptions } from "@apollo/client/react/types/types";
 
 export interface ImageListEditorClasses {
   root: string;

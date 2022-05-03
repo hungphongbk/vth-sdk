@@ -4,8 +4,7 @@
     "url": "https://github.com/hungphongbk/vth-sdk/issues"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.5.0 || ^3.6.0",
-    "@hungphongbk/apollo-client": "^3.6.2",
+    "@apollo/client": "^3.6.2",
     "@hookform/resolvers": "^2.8.8",
     "@hungphongbk/material-ui-popup-state": "^2.1.0",
     "@mui/base": "^5.0.0-alpha.78",
@@ -25,7 +24,7 @@
   },
   "description": "Made for vaithuhay solutions",
   "devDependencies": {
-    "@apollo/client": "^3.5.5",
+    "@apollo/client": "^3.6.2",
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.11",
     "@graphql-codegen/cli": "2.6.2",
@@ -121,7 +120,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
-    "@hungphongbk/apollo-client": "^3.6.2",
     "@hungphongbk/material-ui-popup-state": "^2.1.0",
     "@types/yup": "^0.29.13",
     "deep-object-diff": "^1.1.0",
