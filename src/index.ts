@@ -23,7 +23,7 @@ export * from "./list-editor";
 export * from "./loading-indicator";
 export * from "./PromptDialog";
 export * from "./services/upload-service-generator";
-export * from "./SimpleTableRoot";
+export * from "./simple-table-root";
 export * from "./svg-image-uploader";
 export * from "./themeAugmentation/components";
 export * from "./themeAugmentation/overrides";

@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { css, styled } from "@mui/material/styles";
-import React, { ForwardedRef, forwardRef } from "react";
+import React, { ForwardedRef, forwardRef, HTMLAttributes } from "react";
 import InputUnstyled, { InputUnstyledProps } from "@mui/base/InputUnstyled";
 
 const GUTTER = 8;
@@ -58,7 +58,11 @@ export const SimpleTableRoot = styled(Box)<{ rounded?: true; error?: boolean }>`
     `}
 `;
 
-const TextEditorBase = styled("input")<{ error?: boolean }>`
+const TextEditorBase = styled(
+  ({ className, ...props }: HTMLAttributes<HTMLInputElement>) => (
+    <input className={`vth-text-editor-base ${className}`} {...props} />
+  )
+)<{ error?: boolean }>`
   appearance: none;
   box-sizing: border-box;
   width: calc(100% + ${GUTTER * 2}px);
@@ -83,7 +87,7 @@ const TextEditorBase = styled("input")<{ error?: boolean }>`
 const Root = styled("div")`
   display: flex;
   align-items: center;
-  ${TextEditorBase} {
+  .vth-text-editor-base {
     flex: 1;
   }
 `;
