@@ -24,6 +24,7 @@ import { useVthTheme } from "../VthThemeProvider";
 import { IMAGE_UPLOADER } from "../constants";
 import ImageUploaderInput from "./image-uploader-input";
 import YouTube from "react-youtube";
+import clsx from "clsx";
 
 export interface ImageUploaderClasses {
   root: string;
@@ -120,6 +121,8 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
       ratio = undefined,
       allowYoutube = false,
       onDelete,
+      className,
+      ...others
     } = props;
 
   const {
@@ -196,7 +199,11 @@ export function ImageUploader<T extends MediaBase = MediaBase>(
   const classes = useUtilityClasses(props);
 
   return (
-    <ImageUploaderThumbnail className={classes.root} ratio={ratio}>
+    <ImageUploaderThumbnail
+      className={clsx(classes.root, className)}
+      ratio={ratio}
+      {...others}
+    >
       {!value || !value.path ? (
         <ImageUploaderInput
           id={id}

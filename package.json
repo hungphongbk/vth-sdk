@@ -122,6 +122,7 @@
     "@hookform/resolvers": "^2.8.8",
     "@hungphongbk/material-ui-popup-state": "^2.1.0",
     "@types/yup": "^0.29.13",
+    "clsx": "^1.1.1",
     "deep-object-diff": "^1.1.0",
     "react-youtube": "^9.0.1",
     "yup": "^0.32.11"

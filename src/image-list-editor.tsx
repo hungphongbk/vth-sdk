@@ -75,8 +75,6 @@ const withImageListEditorWrapper = (
         refetchQueries: [hooks.refetchQuery],
       });
 
-    console.log(value);
-
     const options = useMemo<ListEditorProps["options"]>(() => {
       if (mode === "add") return { deletable: true };
       return {
