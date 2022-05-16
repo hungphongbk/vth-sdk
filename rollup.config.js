@@ -1,13 +1,8 @@
 import resolve from "@rollup/plugin-node-resolve";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
-import pkg from "./package.json";
 import typescript from "rollup-plugin-typescript2";
 import copy from "rollup-plugin-copy";
 import { getBabelOutputPlugin } from "@rollup/plugin-babel";
 import commonjs from "@rollup/plugin-commonjs";
-
-// Excluded dependencies
-const EXTERNAL = Object.keys(pkg.devDependencies);
 
 export default {
   input: ["src/index.ts"],
@@ -20,8 +15,8 @@ export default {
     preserveModules: true,
     preserveModulesRoot: "src",
   },
+  external: [/node_modules/],
   plugins: [
-    peerDepsExternal(),
     resolve(),
     typescript(),
     commonjs({
@@ -84,5 +79,4 @@ export default {
       ],
     }),
   ],
-  external: EXTERNAL,
 };
