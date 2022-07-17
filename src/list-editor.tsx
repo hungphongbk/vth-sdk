@@ -3,6 +3,7 @@ import { Control, useFieldArray } from "react-hook-form";
 import React, { ComponentType, useCallback, useMemo } from "react";
 import { FormInput } from "./FormInput";
 import { uniqueId } from "lodash";
+import { FieldValues } from "react-hook-form/dist/types/fields";
 
 export type ListEditorOptions = {
   deletable?: boolean;
@@ -10,9 +11,9 @@ export type ListEditorOptions = {
   onUpdate?: (value: any) => boolean | Promise<boolean>;
   onDelete?: (value: any) => boolean | Promise<Boolean>;
 };
-export type ListEditorProps = {
+export type ListEditorProps<T> = {
   name: string;
-  control: Control<any>;
+  control: Control<T>;
   ItemComponent: ComponentType<any>;
   ItemComponentProps?: any;
   itemGenerator?: (index: number) => any;
@@ -20,6 +21,7 @@ export type ListEditorProps = {
   ListComponentProps?: any;
   options?: ListEditorOptions;
 };
+export function ListEditor<T>(props: ListEditorProps<T>): JSX.Element;
 export function ListEditor({
   name,
   control,
@@ -29,7 +31,7 @@ export function ListEditor({
   ListComponent = Stack,
   ListComponentProps = {},
   options: _options = {},
-}: ListEditorProps): JSX.Element {
+}: ListEditorProps<FieldValues>): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { fields, append, remove } = useFieldArray({ control, name });
   const options: ListEditorOptions = useMemo(
