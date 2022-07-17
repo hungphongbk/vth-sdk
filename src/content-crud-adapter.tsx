@@ -3,8 +3,9 @@ import { ListEditor, ListEditorProps } from "./list-editor";
 import { useForm } from "react-hook-form";
 import { cloneDeep, get, omit } from "lodash";
 import { MutationHooks, QueryHooks } from "./types";
+import { FieldValues } from "react-hook-form/dist/types/fields";
 
-type ShowcaseContentCrudAdapterProps = ListEditorProps & {
+type ShowcaseContentCrudAdapterProps<T> = ListEditorProps<T> & {
   mode: "add" | "edit";
   hooks: {
     getAll: [QueryHooks, any];
@@ -32,7 +33,7 @@ function InnerAdapter({
   control: _,
   options,
   ...props
-}: Omit<ShowcaseContentCrudAdapterProps, "mode">) {
+}: Omit<ShowcaseContentCrudAdapterProps<FieldValues>, "mode">) {
   const form = useForm({
       defaultValues: {
         [name]: [],
@@ -84,11 +85,14 @@ function InnerAdapter({
   );
 }
 
+export function ContentCrudAdapter<T>(
+  props: ShowcaseContentCrudAdapterProps<T>
+): JSX.Element;
 export function ContentCrudAdapter({
   mode,
   hooks,
   ...props
-}: ShowcaseContentCrudAdapterProps): JSX.Element {
+}: ShowcaseContentCrudAdapterProps<FieldValues>): JSX.Element {
   if (mode === "add") return <ListEditor {...props} />;
   return <InnerAdapter hooks={hooks} {...props} />;
 }
