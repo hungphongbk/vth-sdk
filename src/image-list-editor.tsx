@@ -23,7 +23,7 @@ export type ImageListEditorClassKey = keyof ImageListEditorClasses;
 
 export interface ImageListEditorPropsInner
   extends Pick<
-    ListEditorProps,
+    ListEditorProps<unknown>,
     "options" | "ListComponent" | "ListComponentProps"
   > {
   control: Control<any>;
@@ -75,7 +75,7 @@ const withImageListEditorWrapper = (
         refetchQueries: [hooks.refetchQuery],
       });
 
-    const options = useMemo<ListEditorProps["options"]>(() => {
+    const options = useMemo<ListEditorProps<unknown>["options"]>(() => {
       if (mode === "add") return { deletable: true };
       return {
         deletable: true,
